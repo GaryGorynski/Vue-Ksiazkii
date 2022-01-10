@@ -5,6 +5,7 @@
         <b-col sm="6">
           <b-form-input
             type="text"
+            :value="author.authorfname"
             v-model="author.authorfname"
             placeholder="Author first name"
           ></b-form-input>
@@ -78,8 +79,8 @@ export default {
     return {
       selectedAuthor: "Author",
       selectedGenre: "Genre",
-      selectAuthor: [{ value: "Author", text: "Author" }],
-      selectGenre: [{ value: "Genre", text: "Genre" }],
+      selectAuthor: [{ value: "Author", text: "Autor Testowy" }],
+      selectGenre: [{ value: "Genre", text: "Genre testowe " }],
       author: {
         authorfname: "",
         authorlname: "",
@@ -96,7 +97,7 @@ export default {
   },
   methods: {
     submitAuthor: function () {
-      this.authors.push(this.author);
+      this.selectAuthor.push(this.author);
     },
     submitGenre: function () {
       this.genres.push(this.genre);
