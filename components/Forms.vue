@@ -54,17 +54,25 @@
         <b-col sm="6">
           <b-form-input placeholder="Book title"></b-form-input>
           <b-form-input placeholder="Release year"></b-form-input>
-
-          <b-form-select
-            :options="select.optionOne"
-            v-for="option in select.optionOne"
-            :key="option.text"
-          ></b-form-select>
-          <b-form-select
-            :options="select.optionTwo"
-            v-for="option in select.optionTwo"
-            :key="option.text"
-          ></b-form-select>
+          <b-form-select>
+            <option
+              v-for="author in selectAuthor"
+              :key="author"
+              :value="author.value"
+            >
+              {{ author.text }}
+            </option>
+          </b-form-select>
+          <b-form-select>
+            <option
+              v-for="genre in selectGenre"
+              :key="genre"
+              :value="genre.value"
+              :selected="genre.value"
+            >
+              {{ genre.text }}
+            </option>
+          </b-form-select>
           <b-button variant="success" type="submit" value="create author"
             >Create Book</b-button
           >
@@ -78,11 +86,8 @@
 export default {
   data() {
     return {
-      select: {
-        selected: null,
-        optionOne: [{ value: null, text: ["Author"] }],
-        optionTwo: [{ value: null, text: "Genre" }],
-      },
+      selectAuthor: [{ value: "Author", text: "Author" }],
+      selectGenre: [{ value: "Genre", text: "Genre" }],
       author: {
         authorfname: "",
         authorlname: "",
