@@ -53,8 +53,10 @@
         <b-col sm="6">
           <b-form-input placeholder="Book title"></b-form-input>
           <b-form-input placeholder="Release year"></b-form-input>
-          <b-form-select></b-form-select>
-
+          <b-form-select>
+            <option value="1"></option>
+          </b-form-select>
+          <p>s</p>
           <b-button variant="success" type="submit" value="create author"
             >Create Book</b-button
           >
