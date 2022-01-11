@@ -96,7 +96,7 @@ export default {
       book: {
         booktitle: "",
         releaseyear: "",
-        bookid: Math.floor(Math.random() * 100000),
+        bookid: "",
       },
       booklist: [],
     };
@@ -118,11 +118,13 @@ export default {
     },
     createBook: function () {
       this.booklist.push({
+        booktitle: this.book.booktitle,
+        releaseyear: this.book.releaseyear,
+        bookid: Math.floor(Math.random() * 100000),
         authorid: this.selectAuthor[this.selectAuthor.length - 1].authorid,
         genreid: this.selectGenre[this.selectGenre.length - 1].genreid,
       });
       console.log(this.booklist);
-      console.log(this.selectAuthor);
     },
   },
 };
