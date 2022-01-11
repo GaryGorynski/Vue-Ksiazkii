@@ -5,12 +5,11 @@
         <b-col sm="6">
           <b-form-input
             type="text"
-            :value="author.authorfname"
-            v-model="author.authorfname"
+            v-model="author.value"
             placeholder="Author first name"
           ></b-form-input>
           <b-form-input
-            v-model="author.authorlname"
+            v-model="author.text"
             placeholder="Author last name"
           ></b-form-input>
           <b-form-input
@@ -27,7 +26,6 @@
         </b-col>
       </b-row>
     </div>
-
     <div id="genre-form">
       <b-row class="my-5">
         <b-col sm="6">
@@ -55,14 +53,7 @@
         <b-col sm="6">
           <b-form-input placeholder="Book title"></b-form-input>
           <b-form-input placeholder="Release year"></b-form-input>
-          <b-form-select
-            v-model="selectedAuthor"
-            :options="selectAuthor"
-          ></b-form-select>
-          <b-form-select
-            v-model="selectedGenre"
-            :options="selectGenre"
-          ></b-form-select>
+          <b-form-select></b-form-select>
 
           <b-button variant="success" type="submit" value="create author"
             >Create Book</b-button
@@ -79,11 +70,11 @@ export default {
     return {
       selectedAuthor: "Author",
       selectedGenre: "Genre",
-      selectAuthor: [{ value: "Author", text: "Autor Testowy" }],
+      selectAuthor: [{ value: "Author", text: "Autor Testowy", id: "1" }],
       selectGenre: [{ value: "Genre", text: "Genre testowe " }],
       author: {
-        authorfname: "",
-        authorlname: "",
+        value: "",
+        text: "",
         authorid: "",
       },
       genre: {
@@ -97,7 +88,11 @@ export default {
   },
   methods: {
     submitAuthor: function () {
-      this.selectAuthor.push(this.author);
+      this.selectAuthor.push({
+        value: this.author.value,
+        text: this.author.text,
+        authorid: this.author.authorid,
+      });
     },
     submitGenre: function () {
       this.genres.push(this.genre);
