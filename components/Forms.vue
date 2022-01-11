@@ -51,17 +51,11 @@
     <div id="book-creator">
       <b-row class="my-5">
         <b-col sm="6">
-          <b-form-input
-            placeholder="Book title"
-            v-model="book.booktitle"
-          ></b-form-input>
-          <b-form-input
-            placeholder="Release year"
-            v-model="book.releaseyear"
-          ></b-form-input>
-          <b-form-select v-model="selectedAuthor" :options="authorOptions">
+          <b-form-input placeholder="Book title"></b-form-input>
+          <b-form-input placeholder="Release year"></b-form-input>
+          <b-form-select v-model="selectedAuthor" :options="selectAuthor">
           </b-form-select>
-          <b-form-select :options="genreOptions"> </b-form-select>
+          <b-form-select :options="selectGenre"> </b-form-select>
           <b-button
             variant="success"
             type="submit"
@@ -82,8 +76,8 @@ export default {
     return {
       selectedAuthor: "Author",
       selectedGenre: "Genre",
-      authorOptions: [{ value: "Author", text: "Autor", authorid: "1" }],
-      genreOptions: [{ value: "Genre", text: "Genre", genreid: "1" }],
+      selectAuthor: [{ value: "Author", text: "Autor", id: "1" }],
+      selectGenre: [{ value: "Genre", text: "Genre", id: "1" }],
       author: {
         value: "",
         text: "",
@@ -103,14 +97,14 @@ export default {
   },
   methods: {
     submitAuthor: function () {
-      this.authorOptions.push({
+      this.selectAuthor.push({
         value: this.author.value,
         text: this.author.text,
         authorid: this.author.authorid,
       });
     },
     submitGenre: function () {
-      this.genreOptions.push({
+      this.selectGenre.push({
         value: this.genre.value,
         text: this.genre.value,
         genreid: this.genre.genreid,
@@ -127,7 +121,6 @@ export default {
         genre: this.genre.value,
         genreid: this.genre.genreid,
       });
-      console.log(this.booklist);
     },
   },
 };
