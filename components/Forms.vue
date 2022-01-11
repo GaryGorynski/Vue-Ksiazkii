@@ -12,10 +12,10 @@
             v-model="author.text"
             placeholder="Author last name"
           ></b-form-input>
-          <b-form-input
+          <!--  <b-form-input
             v-model="author.authorid"
             placeholder="Author ID"
-          ></b-form-input>
+          ></b-form-input> !-->
           <b-button
             variant="primary"
             type="submit"
@@ -80,21 +80,23 @@
 export default {
   data() {
     return {
-      selectedAuthor: "Author",
-      selectedGenre: "Genre",
-      selectAuthor: [{ value: "Author", text: "Autor", id: "1" }],
-      selectGenre: [{ value: "Genre", text: "Genre", id: "1" }],
+      selectedAuthor: null,
+      selectedGenre: null,
+      selectAuthor: [{ value: null, text: "Autor", id: "" }],
+      selectGenre: [{ value: null, text: "Genre", id: "" }],
       author: {
         value: "",
         text: "",
-        authorid: "",
+        id: "",
       },
       genre: {
         value: "",
+        id: "",
       },
       book: {
         booktitle: "",
         releaseyear: "",
+        bookid: Math.floor(Math.random() * 100000),
       },
       booklist: [],
     };
@@ -104,27 +106,23 @@ export default {
       this.selectAuthor.push({
         value: this.author.value,
         text: this.author.text,
-        authorid: this.author.authorid,
+        authorid: Math.floor(Math.random() * 100000),
       });
     },
     submitGenre: function () {
       this.selectGenre.push({
         value: this.genre.value,
         text: this.genre.value,
+        genreid: Math.floor(Math.random() * 100000),
       });
     },
     createBook: function () {
       this.booklist.push({
-        booktitle: this.book.booktitle,
-        releaseyear: this.book.releaseyear,
-        author: this.selectAuthor[this.selectAuthor.length - 1].value,
-        authorlname: this.selectAuthor[this.selectAuthor.length - 1].text,
         authorid: this.selectAuthor[this.selectAuthor.length - 1].authorid,
-        genre: this.selectGenre[this.selectGenre.length - 1].value,
-        genreid: Math.floor(Math.random() * 100000),
-        bookid: Math.floor(Math.random() * 100000),
+        genreid: this.selectGenre[this.selectGenre.length - 1].genreid,
       });
       console.log(this.booklist);
+      console.log(this.selectAuthor);
     },
   },
 };
