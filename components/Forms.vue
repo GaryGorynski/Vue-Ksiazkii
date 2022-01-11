@@ -55,7 +55,8 @@
           <b-form-input placeholder="Release year"></b-form-input>
           <b-form-select v-model="selectedAuthor" :options="selectAuthor">
           </b-form-select>
-          <b-form-select :options="selectGenre"> </b-form-select>
+          <b-form-select v-model="selectedGenre" :options="selectGenre">
+          </b-form-select>
           <b-button
             variant="success"
             type="submit"

@@ -1,26 +1,28 @@
 <template>
   <div>
-    <table class="table table-hover">
-      <thead class="table__head">
-        <tr>
-          <td scope="row">Title</td>
-          <td scope="row">Author first name</td>
-          <td scope="row">Author last name</td>
-          <td scope="row">Book ID</td>
-          <td scope="row">Release year</td>
-          <td scope="row">Author ID</td>
-          <td scope="row">Genre</td>
-          <td scope="row">Genre ID</td>
-          <td class="table__data-delete" scope="row">x</td>
-        </tr>
-      </thead>
-      <tbody id="table__body"></tbody>
-    </table>
+    <b-table striped hover :items="items" :fields="fields"></b-table>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      fields: [
+        "Title",
+        "Author first name",
+        "Author last name",
+        "Book ID",
+        "Release year",
+        "Author ID",
+        "Genre",
+        "Genre ID",
+        "X",
+      ],
+      items: [],
+    };
+  },
+};
 </script>
 
 <style>
