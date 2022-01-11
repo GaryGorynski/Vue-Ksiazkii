@@ -30,11 +30,11 @@
       <b-row class="my-5">
         <b-col sm="6">
           <b-form-input
-            v-model="genre.genrename"
+            v-model="genre.value"
             placeholder="Genre"
           ></b-form-input>
           <b-form-input
-            v-model="genre.id"
+            v-model="genre.genreid"
             placeholder="Genre ID"
           ></b-form-input>
 
@@ -53,11 +53,14 @@
         <b-col sm="6">
           <b-form-input placeholder="Book title"></b-form-input>
           <b-form-input placeholder="Release year"></b-form-input>
-          <b-form-select>
-            <option value="1"></option>
+          <b-form-select v-model="selectedAuthor" :options="selectAuthor">
           </b-form-select>
-          <p>s</p>
-          <b-button variant="success" type="submit" value="create author"
+          <b-form-select :options="selectGenre"> </b-form-select>
+          <b-button
+            variant="success"
+            type="submit"
+            value="create author"
+            @click="createBook"
             >Create Book</b-button
           >
         </b-col>
@@ -72,19 +75,18 @@ export default {
     return {
       selectedAuthor: "Author",
       selectedGenre: "Genre",
-      selectAuthor: [{ value: "Author", text: "Autor Testowy", id: "1" }],
-      selectGenre: [{ value: "Genre", text: "Genre testowe " }],
+      selectAuthor: [{ value: "Author", text: "Autor", id: "1" }],
+      selectGenre: [{ value: "Genre", text: "Genre", id: "1" }],
       author: {
         value: "",
         text: "",
         authorid: "",
       },
       genre: {
-        genrename: "",
+        value: "",
         genreid: "",
       },
-      authors: [],
-      genres: [],
+
       booklist: [],
     };
   },
@@ -97,8 +99,11 @@ export default {
       });
     },
     submitGenre: function () {
-      this.genres.push(this.genre);
-      console.log(this.genres);
+      this.selectGenre.push({
+        value: this.genre.value,
+        text: this.genre.value,
+        genreid: this.genre.genreid,
+      });
     },
   },
 };
