@@ -139,7 +139,7 @@ export default {
   methods: {
     submitAuthor: function () {
       if (this.author.value === "" || this.author.text === "") {
-        this.$v.$touch();
+        this.$v.author.$touch();
       } else {
         this.selectAuthor.push({
           value: Math.floor(Math.random() * 100000),
@@ -150,7 +150,7 @@ export default {
     },
     submitGenre: function () {
       if (this.genre.value === "") {
-        this.$v.$touch();
+        this.$v.genre.$touch();
       } else {
         this.selectGenre.push({
           value: Math.floor(Math.random() * 100000),
