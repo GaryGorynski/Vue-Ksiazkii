@@ -1,5 +1,6 @@
 <template>
   <div class="forms">
+    <Authorform :author="author"> </Authorform>
     <div id="author-form">
       <b-row class="my-5">
         <b-col sm="6">
@@ -13,6 +14,7 @@
             }"
           >
           </b-form-input>
+
           <div class="invalid-feedback">
             <span v-if="!$v.author.value.required" class="text-danger"
               >Author first name is required</span
@@ -34,10 +36,6 @@
             >
           </div>
 
-          <!--  <b-form-input
-            v-model="author.authorid"
-            placeholder="Author ID"
-          ></b-form-input> !-->
           <b-button
             variant="primary"
             type="submit"
@@ -48,6 +46,7 @@
         </b-col>
       </b-row>
     </div>
+
     <div id="genre-form">
       <b-row class="my-5">
         <b-col sm="6">
