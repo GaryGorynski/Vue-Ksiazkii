@@ -10,6 +10,7 @@
           ></b-form-input>
           <b-form-input
             v-model="author.text"
+            type="text"
             placeholder="Author last name"
           ></b-form-input>
           <!--  <b-form-input
@@ -54,12 +55,18 @@
           <b-form-input
             v-model="book.booktitle"
             placeholder="Book title"
+            type="text"
           ></b-form-input>
           <b-form-input
             v-model="book.releaseyear"
             placeholder="Release year"
+            type="text"
           ></b-form-input>
-          <b-form-select v-model="selectedAuthor" :options="selectAuthor">
+          <b-form-select
+            v-model="selectedAuthor"
+            :options="selectAuthor"
+            @click="check"
+          >
           </b-form-select>
           <b-form-select v-model="selectedGenre" :options="selectGenre">
           </b-form-select>
@@ -68,6 +75,7 @@
             type="submit"
             value="create author"
             @click="createBook"
+            aria-required="true"
             >Create Book</b-button
           >
         </b-col>
@@ -82,38 +90,34 @@ export default {
     return {
       selectedAuthor: null,
       selectedGenre: null,
-      selectAuthor: [{ value: null, text: "Autor", id: "" }],
-      selectGenre: [{ value: null, text: "Genre", id: "" }],
+      selectAuthor: [{ value: null, text: "Author" }],
+      selectGenre: [{ value: null, text: "Genre" }],
       author: {
         value: "",
         text: "",
-        id: "",
       },
       genre: {
         value: "",
-        id: "",
       },
       book: {
         booktitle: "",
         releaseyear: "",
-        bookid: "",
       },
       booklist: [],
     };
   },
+
   methods: {
     submitAuthor: function () {
       this.selectAuthor.push({
-        value: this.author.value,
-        text: this.author.text,
-        authorid: Math.floor(Math.random() * 100000),
+        value: Math.floor(Math.random() * 100000),
+        text: this.author.value + " " + this.author.text,
       });
     },
     submitGenre: function () {
       this.selectGenre.push({
-        value: this.genre.value,
+        value: Math.floor(Math.random() * 100000),
         text: this.genre.value,
-        genreid: Math.floor(Math.random() * 100000),
       });
     },
     createBook: function () {
@@ -121,10 +125,13 @@ export default {
         booktitle: this.book.booktitle,
         releaseyear: this.book.releaseyear,
         bookid: Math.floor(Math.random() * 100000),
-        authorid: this.selectAuthor[this.selectAuthor.length - 1].authorid,
-        genreid: this.selectGenre[this.selectGenre.length - 1].genreid,
+        authorid: this.selectedAuthor,
+        genreid: this.selectedGenre,
       });
       console.log(this.booklist);
+    },
+    check: function () {
+      console.log();
     },
   },
 };
