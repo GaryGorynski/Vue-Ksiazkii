@@ -13,6 +13,11 @@
             }"
           >
           </b-form-input>
+          <div class="invalid-feedback">
+            <span v-if="!$v.author.value.required" class="text-danger"
+              >Author first name is required</span
+            >
+          </div>
 
           <b-form-input
             type="text"
@@ -23,6 +28,11 @@
               'is-valid': !$v.author.text.$invalid,
             }"
           ></b-form-input>
+          <div class="invalid-feedback">
+            <span v-if="!$v.author.text.required" class="text-danger"
+              >Author last name is required</span
+            >
+          </div>
 
           <!--  <b-form-input
             v-model="author.authorid"
@@ -49,7 +59,11 @@
             v-model="genre.value"
             placeholder="Genre"
           ></b-form-input>
-
+          <div class="invalid-feedback">
+            <span v-if="!$v.genre.value.required" class="text-danger"
+              >Genre is required</span
+            >
+          </div>
           <b-button
             variant="primary"
             type="submit"
@@ -72,6 +86,11 @@
               'is-valid': !$v.book.booktitle.$invalid,
             }"
           ></b-form-input>
+          <div class="invalid-feedback">
+            <span v-if="!$v.book.booktitle.required" class="text-danger"
+              >Book title is required</span
+            >
+          </div>
           <b-form-input
             :class="{
               'is-invalid': $v.book.releaseyear.$error,
@@ -81,6 +100,14 @@
             placeholder="Release year"
             type="number"
           ></b-form-input>
+          <div class="invalid-feedback">
+            <span v-if="!$v.book.releaseyear.required" class="text-danger"
+              >Release year required</span
+            >
+            <span v-else-if="!$v.book.releaseyear.numeric" class="text-danger"
+              >Has to be a number</span
+            >
+          </div>
 
           <b-form-select v-model="selectedAuthor" :options="selectAuthor">
           </b-form-select>
@@ -145,7 +172,8 @@ export default {
           value: Math.floor(Math.random() * 100000),
           text: this.author.value + " " + this.author.text,
         });
-        this.author = "";
+        this.author.value = "";
+        this.author.text = "";
       }
     },
     submitGenre: function () {
@@ -161,9 +189,6 @@ export default {
     },
     createBook: function () {
       if (
-        this.author.value === "" ||
-        this.author.text === "" ||
-        this.genre.value === "" ||
         this.book.booktitle === "" ||
         this.book.releaseyear === "" ||
         this.selectedAuthor == null ||
@@ -179,7 +204,8 @@ export default {
           genreid: this.selectedGenre,
         });
       }
-      this.book = "";
+      this.book.booktitle = "";
+      this.book.releaseyear = "";
       (this.selectedAuthor = null), (this.selectedGenre = null);
       console.log(this.booklist);
     },
