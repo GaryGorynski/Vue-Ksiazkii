@@ -128,8 +128,16 @@
 </template>
 <script>
 import { required, numeric } from "vuelidate/lib/validators";
+import Author_form from "./Author_form.vue";
+import Genre_form from "./Genre_form.vue";
+import CreateBook_form from "./CreateBook_form.vue";
 
 export default {
+  components: {
+    Authorform: Author_form,
+    Genreform: Genre_form,
+    Createbookform: CreateBook_form,
+  },
   data() {
     return {
       selectedAuthor: null,
