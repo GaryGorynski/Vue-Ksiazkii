@@ -7,7 +7,9 @@
             type="text"
             v-model="author.value"
             placeholder="Author first name"
-          ></b-form-input>
+          >
+            <div class="error" v-if="!$v.author.value.required">Test</div>
+          </b-form-input>
           <b-form-input
             v-model="author.text"
             type="text"
@@ -83,8 +85,8 @@
     </div>
   </div>
 </template>
-
 <script>
+import { required } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
@@ -106,13 +108,21 @@ export default {
       booklist: [],
     };
   },
-
+  validations: {
+    author: {
+      value: { required },
+    },
+  },
   methods: {
     submitAuthor: function () {
       this.selectAuthor.push({
         value: Math.floor(Math.random() * 100000),
         text: this.author.value + " " + this.author.text,
       });
+      this.$v.$touch();
+      if (!this.$v.invalid) {
+        console.log(`Name: ${this.author.value}`);
+      }
     },
     submitGenre: function () {
       this.selectGenre.push({
@@ -129,9 +139,6 @@ export default {
         genreid: this.selectedGenre,
       });
       console.log(this.booklist);
-    },
-    check: function () {
-      console.log();
     },
   },
 };
