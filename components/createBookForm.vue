@@ -33,8 +33,9 @@
             >Has to be a number</span
           >
         </div>
-        <b-form-select v-model="test" :options="selectAuthor"> </b-form-select>
-        <b-form-select v-model="selectedGenre" :options="selectGenre">
+        <b-form-select v-model="computedAuthor" :options="selectAuthor">
+        </b-form-select>
+        <b-form-select v-model="computedGenre" :options="selectGenre">
         </b-form-select>
         <b-button
           variant="success"
@@ -64,15 +65,24 @@ export default {
         booktitle: "",
         releaseyear: "",
       },
-      testowo: "",
     };
   },
   computed: {
-    test: {
+    computedAuthor: {
       get: function () {
         return this.selectedAuthor;
       },
-      set: function (value) {},
+      set: function (value) {
+        this.$emit("updateSelectAuthor", value);
+      },
+    },
+    computedGenre: {
+      get: function () {
+        return this.selectedGenre;
+      },
+      set: function (value) {
+        this.$emit("updateSelectGenre", value);
+      },
     },
   },
   methods: {
@@ -81,8 +91,8 @@ export default {
         booktitle: this.book.booktitle,
         releaseyear: this.book.releaseyear,
         bookid: Math.floor(Math.random() * 100000),
-        authorid: this.test,
-        genreid: this.selectedGenre,
+        authorid: this.computedAuthor,
+        genreid: this.computedGenre,
       });
     },
   },

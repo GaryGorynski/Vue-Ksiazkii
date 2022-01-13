@@ -7,6 +7,8 @@
     <CreateBookForm
       v-bind="authorprops"
       v-on:createdBook="createBook($event)"
+      v-on:updateSelectAuthor="updateSelectAuthor($event)"
+      v-on:updateSelectGenre="updateSelectGenre($event)"
     />
   </div>
 </template>
@@ -52,6 +54,12 @@ export default {
     createBook: function (event) {
       this.booklist.push(event);
       console.log(this.booklist);
+    },
+    updateSelectAuthor: function (event) {
+      return (this.authorprops.selectedAuthor = event);
+    },
+    updateSelectGenre: function (event) {
+      return (this.authorprops.selectedGenre = event);
     },
   },
 };
