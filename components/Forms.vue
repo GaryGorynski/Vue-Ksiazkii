@@ -5,10 +5,7 @@
     <GenreForm v-on:submitedGenre="submitGenre($event)" />
 
     <CreateBookForm
-      :selectedAuthor="selectedAuthor"
-      :selectedGenre="selectedGenre"
-      :selectAuthor="selectAuthor"
-      :selectGenre="selectGenre"
+      v-bind="authorprops"
       v-on:createdBook="createBook($event)"
     />
   </div>
@@ -27,10 +24,13 @@ export default {
   },
   data() {
     return {
-      selectedAuthor: null,
-      selectedGenre: null,
-      selectAuthor: [{ value: null, text: "Author" }],
-      selectGenre: [{ value: null, text: "Genre" }],
+      authorprops: {
+        selectedAuthor: null,
+        selectedGenre: null,
+        selectAuthor: [{ value: null, text: "Author" }],
+        selectGenre: [{ value: null, text: "Genre" }],
+      },
+
       booklist: [],
     };
   },
@@ -40,12 +40,14 @@ export default {
       releaseyear: { required, numeric },
     },
   },
+
   methods: {
     submitAuthor: function (event) {
-      this.selectAuthor.push(event);
+      this.authorprops.selectAuthor.push(event);
+      console.log(this.authorprops.selectAuthor);
     },
     submitGenre: function (event) {
-      this.selectGenre.push(event);
+      this.authorprops.selectGenre.push(event);
     },
     createBook: function (event) {
       this.booklist.push(event);

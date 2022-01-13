@@ -33,8 +33,7 @@
             >Has to be a number</span
           >
         </div>
-        <b-form-select v-model="selectedAuthor" :options="selectAuthor">
-        </b-form-select>
+        <b-form-select v-model="test" :options="selectAuthor"> </b-form-select>
         <b-form-select v-model="selectedGenre" :options="selectGenre">
         </b-form-select>
         <b-button
@@ -53,19 +52,28 @@
 <script>
 import { required, numeric } from "vuelidate/lib/validators";
 export default {
+  props: {
+    selectedAuthor: { required: true },
+    selectedGenre: { required: true },
+    selectAuthor: { type: Array, required: true },
+    selectGenre: { type: Array, required: true },
+  },
   data() {
     return {
-      props: {
-        selectedAuthor: { type: Object, required: false },
-        selectedGenre: { type: Object, required: false },
-        selectAuthor: { type: Array, required: false },
-        selectGenre: { type: Array, required: false },
-      },
       book: {
         booktitle: "",
         releaseyear: "",
       },
+      testowo: "",
     };
+  },
+  computed: {
+    test: {
+      get: function () {
+        return this.selectedAuthor;
+      },
+      set: function (value) {},
+    },
   },
   methods: {
     createdBook: function () {
@@ -73,7 +81,7 @@ export default {
         booktitle: this.book.booktitle,
         releaseyear: this.book.releaseyear,
         bookid: Math.floor(Math.random() * 100000),
-        authorid: this.selectedAuthor,
+        authorid: this.test,
         genreid: this.selectedGenre,
       });
     },

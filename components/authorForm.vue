@@ -57,6 +57,7 @@ export default {
       },
     };
   },
+
   methods: {
     submitedAuthor: function () {
       if (this.author.value === "" || this.author.text === "") {
