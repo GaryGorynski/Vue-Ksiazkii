@@ -39,8 +39,9 @@ export default {
   },
   methods: {
     submitedGenre: function () {
-      if (this.genre.value === "") {
-        this.$v.genre.$touch();
+      this.$v.genre.$touch();
+      if (this.$v.$invalid) {
+        console.log("dupa");
       } else {
         this.$emit("submitedGenre", {
           value: Math.floor(Math.random() * 100000),

@@ -60,16 +60,19 @@ export default {
 
   methods: {
     submitedAuthor: function () {
-      if (this.author.value === "" || this.author.text === "") {
-        this.$v.author.$touch();
+      this.$v.author.$touch();
+
+      if (this.$v.$invalid) {
+        console.log("wypełnij");
       } else {
         this.$emit("submitedAuthor", {
           value: Math.floor(Math.random() * 100000),
           text: this.author.value + " " + this.author.text,
         });
-        this.author.value = "";
-        this.author.text = "";
       }
+
+      this.author.value = "";
+      this.author.text = "";
     },
   },
   validations: {

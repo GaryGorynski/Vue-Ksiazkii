@@ -23,7 +23,7 @@
           }"
           v-model="book.releaseyear"
           placeholder="Release year"
-          type="number"
+          type="text"
         ></b-form-input>
         <div class="invalid-feedback">
           <span v-if="!$v.book.releaseyear.required" class="text-danger"
@@ -87,13 +87,17 @@ export default {
   },
   methods: {
     createdBook: function () {
-      this.$emit("createdBook", {
-        booktitle: this.book.booktitle,
-        releaseyear: this.book.releaseyear,
-        bookid: Math.floor(Math.random() * 100000),
-        authorid: this.computedAuthor,
-        genreid: this.computedGenre,
-      });
+      this.$v.book.$touch();
+      if (this.$v.$invalid) {
+      } else {
+        this.$emit("createdBook", {
+          booktitle: this.book.booktitle,
+          releaseyear: this.book.releaseyear,
+          bookid: Math.floor(Math.random() * 100000),
+          authorid: this.computedAuthor,
+          genreid: this.computedGenre,
+        });
+      }
     },
   },
   validations: {
