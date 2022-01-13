@@ -4,7 +4,13 @@
 
     <GenreForm v-on:submitedGenre="submitGenre($event)" />
 
-    <CreateBookForm v-on:createdBook="createBook($event)" />
+    <CreateBookForm
+      :selectedAuthor="selectedAuthor"
+      :selectedGenre="selectedGenre"
+      :selectAuthor="selectAuthor"
+      :selectGenre="selectGenre"
+      v-on:createdBook="createBook($event)"
+    />
   </div>
 </template>
 <script>
@@ -37,14 +43,13 @@ export default {
   methods: {
     submitAuthor: function (event) {
       this.selectAuthor.push(event);
-      console.log(this.selectAuthor);
     },
     submitGenre: function (event) {
       this.selectGenre.push(event);
-      console.log(this.selectGenre);
     },
     createBook: function (event) {
       this.booklist.push(event);
+      console.log(this.booklist);
     },
   },
 };

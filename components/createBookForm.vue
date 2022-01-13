@@ -33,11 +33,10 @@
             >Has to be a number</span
           >
         </div>
-
-        <!--    <b-form-select v-model="selectedAuthor" :options="selectAuthor">
+        <b-form-select v-model="selectedAuthor" :options="selectAuthor">
         </b-form-select>
         <b-form-select v-model="selectedGenre" :options="selectGenre">
-        </b-form-select> !-->
+        </b-form-select>
         <b-button
           variant="success"
           type="submit"
@@ -57,18 +56,10 @@ export default {
   data() {
     return {
       props: {
-        selectedAuthor: {
-          type: Object,
-        },
-        selectedGenre: {
-          type: Object,
-        },
-        selectAuthor: {
-          type: Array,
-        },
-        selectGenre: {
-          type: Array,
-        },
+        selectedAuthor: { type: Object, required: false },
+        selectedGenre: { type: Object, required: false },
+        selectAuthor: { type: Array, required: false },
+        selectGenre: { type: Array, required: false },
       },
       book: {
         booktitle: "",
@@ -78,22 +69,13 @@ export default {
   },
   methods: {
     createdBook: function () {
-      if (
-        this.book.booktitle === "" ||
-        this.book.releaseyear === "" ||
-        this.selectedAuthor == null ||
-        this.selectedGenre == null
-      ) {
-        this.$v.$touch();
-      } else {
-        this.$event("createdBook", {
-          booktitle: this.book.booktitle,
-          releaseyear: this.book.releaseyear,
-          bookid: Math.floor(Math.random() * 100000),
-          authorid: this.selectedAuthor,
-          genreid: this.selectedGenre,
-        });
-      }
+      this.$emit("createdBook", {
+        booktitle: this.book.booktitle,
+        releaseyear: this.book.releaseyear,
+        bookid: Math.floor(Math.random() * 100000),
+        authorid: this.selectedAuthor,
+        genreid: this.selectedGenre,
+      });
     },
   },
   validations: {
