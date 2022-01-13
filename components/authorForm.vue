@@ -69,6 +69,7 @@ export default {
         this.author.value = "";
         this.author.text = "";
       }
+      console.log(this.selectedAuthor);
     },
   },
   validations: {
