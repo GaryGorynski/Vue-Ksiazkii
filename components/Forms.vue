@@ -1,78 +1,9 @@
 <template>
   <div class="forms">
-    <Authorform :author="author"> </Authorform>
-    <div id="author-form">
-      <b-row class="my-5">
-        <b-col sm="6">
-          <b-form-input
-            type="text"
-            placeholder="Author first name"
-            v-model="$v.author.value.$model"
-            :class="{
-              'is-invalid': $v.author.value.$error,
-              'is-valid': !$v.author.value.$invalid,
-            }"
-          >
-          </b-form-input>
+    <AuthorForm v-on:submitedAuthor="submitAuthor($event)" />
 
-          <div class="invalid-feedback">
-            <span v-if="!$v.author.value.required" class="text-danger"
-              >Author first name is required</span
-            >
-          </div>
+    <GenreForm v-on:submitedGenre="submitGenre($event)" />
 
-          <b-form-input
-            type="text"
-            placeholder="Author last name"
-            v-model="$v.author.text.$model"
-            :class="{
-              'is-invalid': $v.author.text.$error,
-              'is-valid': !$v.author.text.$invalid,
-            }"
-          ></b-form-input>
-          <div class="invalid-feedback">
-            <span v-if="!$v.author.text.required" class="text-danger"
-              >Author last name is required</span
-            >
-          </div>
-
-          <b-button
-            variant="primary"
-            type="submit"
-            value="create author"
-            @click.prevent="submitAuthor"
-            >Create Author</b-button
-          >
-        </b-col>
-      </b-row>
-    </div>
-
-    <div id="genre-form">
-      <b-row class="my-5">
-        <b-col sm="6">
-          <b-form-input
-            :class="{
-              'is-invalid': $v.genre.value.$error,
-              'is-valid': !$v.genre.value.$invalid,
-            }"
-            v-model="genre.value"
-            placeholder="Genre"
-          ></b-form-input>
-          <div class="invalid-feedback">
-            <span v-if="!$v.genre.value.required" class="text-danger"
-              >Genre is required</span
-            >
-          </div>
-          <b-button
-            variant="primary"
-            type="submit"
-            value="create genre"
-            @click="submitGenre"
-            >Create Genre</b-button
-          >
-        </b-col>
-      </b-row>
-    </div>
     <div id="book-creator">
       <b-row class="my-5">
         <b-col sm="6">
@@ -127,15 +58,15 @@
 </template>
 <script>
 import { required, numeric } from "vuelidate/lib/validators";
-import Author_form from "./Author_form.vue";
-import Genre_form from "./Genre_form.vue";
-import CreateBook_form from "./CreateBook_form.vue";
+import authorForm from "./authorForm.vue";
+import genreForm from "./genreForm.vue";
+import createBookForm from "./createBookForm.vue";
 
 export default {
   components: {
-    Authorform: Author_form,
-    Genreform: Genre_form,
-    Createbookform: CreateBook_form,
+    AuthorForm: authorForm,
+    GenreForm: genreForm,
+    createBookForm: createBookForm,
   },
   data() {
     return {
@@ -147,9 +78,7 @@ export default {
         value: "",
         text: "",
       },
-      genre: {
-        value: "",
-      },
+
       book: {
         booktitle: "",
         releaseyear: "",
@@ -171,28 +100,11 @@ export default {
     },
   },
   methods: {
-    submitAuthor: function () {
-      if (this.author.value === "" || this.author.text === "") {
-        this.$v.author.$touch();
-      } else {
-        this.selectAuthor.push({
-          value: Math.floor(Math.random() * 100000),
-          text: this.author.value + " " + this.author.text,
-        });
-        this.author.value = "";
-        this.author.text = "";
-      }
+    submitAuthor: function (event) {
+      this.selectAuthor.push(event);
     },
-    submitGenre: function () {
-      if (this.genre.value === "") {
-        this.$v.genre.$touch();
-      } else {
-        this.selectGenre.push({
-          value: Math.floor(Math.random() * 100000),
-          text: this.genre.value,
-        });
-        this.genre.value = "";
-      }
+    submitGenre: function (event) {
+      this.selectGenre.push(event);
     },
     createBook: function () {
       if (
@@ -211,9 +123,7 @@ export default {
           genreid: this.selectedGenre,
         });
       }
-      this.book.booktitle = "";
-      this.book.releaseyear = "";
-      (this.selectedAuthor = null), (this.selectedGenre = null);
+
       console.log(this.booklist);
     },
   },
