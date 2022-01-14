@@ -15,8 +15,8 @@
     />
     <div>
       <b-table v-model="items.X" striped hover :items="items">
-        <template #cell(X)="data">
-          <b class="text-danger" @click="deleteRow">{{ data.value }}</b>
+        <template #cell(X)="{ item }">
+          <b class="text-danger" @click="deleteRow(item)">X</b>
         </template>
       </b-table>
     </div>
@@ -106,8 +106,9 @@ export default {
 
       this.items.push(items);
     },
-    deleteRow: function (MouseEvent) {
-      MouseEvent.target.parentElement.parentElement.remove();
+    deleteRow: function (dupa) {
+      const filtered = this.items.filter((test) => test !== dupa);
+      this.items = filtered;
     },
     updateSelectAuthor: function (event) {
       this.authorprops.selectedAuthor = event;
