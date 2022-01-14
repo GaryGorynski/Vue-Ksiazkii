@@ -14,7 +14,11 @@
       v-on:updateSelectGenre="updateSelectGenre($event)"
     />
     <div>
-      <b-table striped hover :items="items"></b-table>
+      <b-table v-model="items.X" striped hover :items="items">
+        <template #cell(X)="data">
+          <b class="text-danger" @click="deleteRow">{{ data.value }}</b>
+        </template>
+      </b-table>
     </div>
   </div>
 </template>
@@ -41,14 +45,13 @@ export default {
       },
       items: [
         {
-          Title: "",
-          Author_first_name: "",
-          Author_last_name: "",
-          Book_ID: "",
-          Release_year: "",
-          Author_ID: "",
-          Genre: "",
-          Genre_ID: "",
+          title: "",
+          author: "",
+          bookID: "",
+          releaseYear: "",
+          authorID: "",
+          genre: "",
+          genreID: "",
           X: "",
         },
       ],
@@ -64,6 +67,7 @@ export default {
   methods: {
     submitAuthor: function (event) {
       this.authorprops.selectAuthor.push(event);
+      console.log(this.authorprops.selectAuthor);
     },
     submitGenre: function (event) {
       this.authorprops.selectGenre.push(event);
@@ -71,19 +75,39 @@ export default {
     createBook: function (event) {
       this.authorprops.booklist.push(event);
       let items = {
-        Title: this.authorprops.booklist[0]["booktitle"],
-        Author_first_name: "B",
-        Author_last_name: "C",
-        Book_ID: this.authorprops.booklist.length - 1,
-        Release_year: "",
-        Author_ID: "",
-        Genre: "",
-        Genre_ID: "",
-        X: "",
+        title:
+          this.authorprops.booklist[this.authorprops.booklist.length - 1][
+            "booktitle"
+          ],
+        author:
+          this.authorprops.selectAuthor[
+            this.authorprops.selectAuthor.length - 1
+          ]["text"],
+
+        bookID: this.authorprops.booklist.length - 1,
+        releaseYear:
+          this.authorprops.booklist[this.authorprops.booklist.length - 1][
+            "releaseyear"
+          ],
+        authorID:
+          this.authorprops.booklist[this.authorprops.booklist.length - 1][
+            "authorid"
+          ],
+        genre:
+          this.authorprops.selectGenre[this.authorprops.selectGenre.length - 1][
+            "text"
+          ],
+        genreID:
+          this.authorprops.booklist[this.authorprops.booklist.length - 1][
+            "genreid"
+          ],
+        X: "X",
       };
 
       this.items.push(items);
-      console.log(this.authorprops.booklist);
+    },
+    deleteRow: function (target) {
+      console.log(target);
     },
     updateSelectAuthor: function (event) {
       this.authorprops.selectedAuthor = event;
