@@ -106,8 +106,8 @@ export default {
 
       this.items.push(items);
     },
-    deleteRow: function (target) {
-      console.log(target);
+    deleteRow: function (MouseEvent) {
+      MouseEvent.target.parentElement.parentElement.remove();
     },
     updateSelectAuthor: function (event) {
       this.authorprops.selectedAuthor = event;
