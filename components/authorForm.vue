@@ -18,7 +18,6 @@
             >Author first name is required</span
           >
         </div>
-
         <b-form-input
           type="text"
           placeholder="Author last name"
@@ -27,7 +26,8 @@
             'is-invalid': $v.author.text.$error,
             'is-valid': !$v.author.text.$invalid,
           }"
-        ></b-form-input>
+        >
+        </b-form-input>
         <div class="invalid-feedback">
           <span v-if="!$v.author.text.required" class="text-danger"
             >Author last name is required</span
@@ -49,6 +49,9 @@
 <script>
 import { required } from "vuelidate/lib/validators";
 export default {
+  props: {
+    selectAuthor: Array,
+  },
   data() {
     return {
       author: {
@@ -66,7 +69,7 @@ export default {
         console.log("wypełnij");
       } else {
         this.$emit("submitedAuthor", {
-          value: Math.floor(Math.random() * 100000),
+          value: this.selectAuthor.length - 1,
           text: this.author.value + " " + this.author.text,
         });
       }

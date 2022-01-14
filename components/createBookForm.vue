@@ -54,10 +54,11 @@
 import { required, numeric } from "vuelidate/lib/validators";
 export default {
   props: {
-    selectedAuthor: { required: true },
-    selectedGenre: { required: true },
+    selectedAuthor: { type: null, required: true },
+    selectedGenre: { type: null, required: true },
     selectAuthor: { type: Array, required: true },
     selectGenre: { type: Array, required: true },
+    booklist: { type: Array, required: true },
   },
   data() {
     return {
@@ -93,7 +94,7 @@ export default {
         this.$emit("createdBook", {
           booktitle: this.book.booktitle,
           releaseyear: this.book.releaseyear,
-          bookid: Math.floor(Math.random() * 100000),
+          bookid: this.booklist.length - 1,
           authorid: this.computedAuthor,
           genreid: this.computedGenre,
         });

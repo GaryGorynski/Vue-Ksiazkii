@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-table striped hover :items="items" :fields="fields"></b-table>
+    <b-table striped hover :items="items"></b-table>
   </div>
 </template>
 
@@ -8,18 +8,19 @@
 export default {
   data() {
     return {
-      fields: [
-        "Title",
-        "Author first name",
-        "Author last name",
-        "Book ID",
-        "Release year",
-        "Author ID",
-        "Genre",
-        "Genre ID",
-        "X",
+      items: [
+        {
+          Title: "",
+          Author_first_name: "",
+          Author_last_name: "",
+          Book_ID: "",
+          Release_year: "",
+          Author_ID: "",
+          Genre: "",
+          Genre_ID: "",
+          X: "",
+        },
       ],
-      items: [],
     };
   },
 };

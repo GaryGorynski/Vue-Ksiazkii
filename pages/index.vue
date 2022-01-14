@@ -3,7 +3,6 @@
     <Modals />
     <Forms />
     <Searchbar />
-    <Table />
   </div>
 </template>
 

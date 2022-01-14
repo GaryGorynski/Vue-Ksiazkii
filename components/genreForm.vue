@@ -30,6 +30,9 @@
 <script>
 import { required } from "vuelidate/lib/validators";
 export default {
+  props: {
+    selectGenre: Array,
+  },
   data() {
     return {
       genre: {
@@ -44,7 +47,7 @@ export default {
         console.log("dupa");
       } else {
         this.$emit("submitedGenre", {
-          value: Math.floor(Math.random() * 100000),
+          value: this.selectGenre.length - 1,
           text: this.genre.value,
         });
         this.genre.value = "";

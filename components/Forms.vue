@@ -1,8 +1,11 @@
 <template>
   <div class="forms">
-    <AuthorForm v-on:submitedAuthor="submitAuthor($event)" />
+    <AuthorForm
+      v-bind="authorprops"
+      v-on:submitedAuthor="submitAuthor($event)"
+    />
 
-    <GenreForm v-on:submitedGenre="submitGenre($event)" />
+    <GenreForm v-bind="authorprops" v-on:submitedGenre="submitGenre($event)" />
 
     <CreateBookForm
       v-bind="authorprops"
@@ -10,6 +13,9 @@
       v-on:updateSelectAuthor="updateSelectAuthor($event)"
       v-on:updateSelectGenre="updateSelectGenre($event)"
     />
+    <div>
+      <b-table striped hover :items="items"></b-table>
+    </div>
   </div>
 </template>
 <script>
@@ -31,9 +37,21 @@ export default {
         selectedGenre: null,
         selectAuthor: [{ value: null, text: "Author" }],
         selectGenre: [{ value: null, text: "Genre" }],
+        booklist: [],
       },
-
-      booklist: [],
+      items: [
+        {
+          Title: "",
+          Author_first_name: "",
+          Author_last_name: "",
+          Book_ID: "",
+          Release_year: "",
+          Author_ID: "",
+          Genre: "",
+          Genre_ID: "",
+          X: "",
+        },
+      ],
     };
   },
   validations: {
@@ -46,20 +64,22 @@ export default {
   methods: {
     submitAuthor: function (event) {
       this.authorprops.selectAuthor.push(event);
+
       console.log(this.authorprops.selectAuthor);
     },
     submitGenre: function (event) {
       this.authorprops.selectGenre.push(event);
+      console.log(this.authorprops.selectGenre);
     },
     createBook: function (event) {
-      this.booklist.push(event);
-      console.log(this.booklist);
+      this.authorprops.booklist.push(event);
+      console.log(this.authorprops.booklist);
     },
     updateSelectAuthor: function (event) {
-      return (this.authorprops.selectedAuthor = event);
+      this.authorprops.selectedAuthor = event;
     },
     updateSelectGenre: function (event) {
-      return (this.authorprops.selectedGenre = event);
+      this.authorprops.selectedGenre = event;
     },
   },
 };
