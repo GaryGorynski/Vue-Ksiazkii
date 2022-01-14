@@ -64,15 +64,25 @@ export default {
   methods: {
     submitAuthor: function (event) {
       this.authorprops.selectAuthor.push(event);
-
-      console.log(this.authorprops.selectAuthor);
     },
     submitGenre: function (event) {
       this.authorprops.selectGenre.push(event);
-      console.log(this.authorprops.selectGenre);
     },
     createBook: function (event) {
       this.authorprops.booklist.push(event);
+      let items = {
+        Title: this.authorprops.booklist[0]["booktitle"],
+        Author_first_name: "B",
+        Author_last_name: "C",
+        Book_ID: this.authorprops.booklist.length - 1,
+        Release_year: "",
+        Author_ID: "",
+        Genre: "",
+        Genre_ID: "",
+        X: "",
+      };
+
+      this.items.push(items);
       console.log(this.authorprops.booklist);
     },
     updateSelectAuthor: function (event) {
