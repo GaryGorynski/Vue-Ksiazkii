@@ -6,33 +6,27 @@
           type="text"
           placeholder="Author first name"
           v-model="$v.author.value.$model"
-          :class="{
-            'is-invalid': $v.author.value.$error,
-            'is-valid': !$v.author.value.$invalid,
-          }"
         >
         </b-form-input>
 
-        <div class="invalid-feedback">
-          <span v-if="!$v.author.value.required" class="text-danger"
-            >Author first name is required</span
-          >
-        </div>
+        <p class="text-success" v-if="submitStatus === 'OK'">
+          Thanks for your submission!
+        </p>
+        <p class="text-danger" v-if="submitStatus === 'ERROR'">
+          Please fill the form correctly.
+        </p>
         <b-form-input
           type="text"
           placeholder="Author last name"
           v-model="$v.author.text.$model"
-          :class="{
-            'is-invalid': $v.author.text.$error,
-            'is-valid': !$v.author.text.$invalid,
-          }"
         >
         </b-form-input>
-        <div class="invalid-feedback">
-          <span v-if="!$v.author.text.required" class="text-danger"
-            >Author last name is required</span
-          >
-        </div>
+        <p class="text-success" v-if="submitStatus === 'OK'">
+          Thanks for your submission!
+        </p>
+        <p class="text-danger" v-if="submitStatus === 'ERROR'">
+          Please fill the form correctly.
+        </p>
 
         <b-button
           variant="primary"
@@ -58,6 +52,7 @@ export default {
         value: "",
         text: "",
       },
+      submitStatus: null,
     };
   },
 
@@ -66,12 +61,13 @@ export default {
       this.$v.author.$touch();
 
       if (this.$v.$invalid) {
-        console.log("wypełnij");
+        this.submitStatus = "ERROR";
       } else {
         this.$emit("submitedAuthor", {
           value: this.selectAuthor.length - 1,
           text: this.author.value + " " + this.author.text,
         });
+        this.submitStatus = "OK";
       }
 
       this.author.value = "";
@@ -87,4 +83,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+p {
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+</style>

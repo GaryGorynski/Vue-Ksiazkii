@@ -3,18 +3,15 @@
     <b-row class="my-5">
       <b-col sm="6">
         <b-form-input
-          :class="{
-            'is-invalid': $v.genre.value.$error,
-            'is-valid': !$v.genre.value.$invalid,
-          }"
-          v-model="genre.value"
+          v-model="$v.genre.value.$model"
           placeholder="Genre"
         ></b-form-input>
-        <div class="invalid-feedback">
-          <span v-if="!$v.genre.value.required" class="text-danger"
-            >Genre is required</span
-          >
-        </div>
+        <p class="text-success" v-if="submitStatus === 'OK'">
+          Thanks for your submission!
+        </p>
+        <p class="text-danger" v-if="submitStatus === 'ERROR'">
+          Please fill the form correctly.
+        </p>
         <b-button
           variant="primary"
           type="submit"
@@ -38,18 +35,20 @@ export default {
       genre: {
         value: "",
       },
+      submitStatus: null,
     };
   },
   methods: {
     submitedGenre: function () {
       this.$v.genre.$touch();
       if (this.$v.$invalid) {
-        console.log("dupa");
+        this.submitStatus = "ERROR";
       } else {
         this.$emit("submitedGenre", {
           value: this.selectGenre.length - 1,
           text: this.genre.value,
         });
+        this.submitStatus = "OK";
         this.genre.value = "";
       }
     },
@@ -62,4 +61,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+p {
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+</style>

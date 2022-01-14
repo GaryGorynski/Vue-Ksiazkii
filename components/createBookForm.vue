@@ -3,36 +3,32 @@
     <b-row class="my-5">
       <b-col sm="6">
         <b-form-input
-          v-model="book.booktitle"
+          v-model="$v.book.booktitle.$model"
           placeholder="Book title"
           type="text"
-          :class="{
-            'is-invalid': $v.book.booktitle.$error,
-            'is-valid': !$v.book.booktitle.$invalid,
-          }"
         ></b-form-input>
-        <div class="invalid-feedback">
-          <span v-if="!$v.book.booktitle.required" class="text-danger"
-            >Book title is required</span
-          >
+        <div class="error" v-if="!$v.book.booktitle.isUnique">
+          This username is already registered.
         </div>
+        <p class="text-success" v-if="submitStatus === 'OK'">
+          Thanks for your submission!
+        </p>
+
+        <p class="text-danger" v-if="submitStatus === 'ERROR'">
+          Please fill the form correctly.
+        </p>
+
         <b-form-input
-          :class="{
-            'is-invalid': $v.book.releaseyear.$error,
-            'is-valid': !$v.book.releaseyear.$invalid,
-          }"
-          v-model="book.releaseyear"
+          v-model="$v.book.releaseyear.$model"
           placeholder="Release year"
           type="text"
         ></b-form-input>
-        <div class="invalid-feedback">
-          <span v-if="!$v.book.releaseyear.required" class="text-danger"
-            >Release year required</span
-          >
-          <span v-else-if="!$v.book.releaseyear.numeric" class="text-danger"
-            >Has to be a number</span
-          >
-        </div>
+        <p class="text-success" v-if="submitStatus === 'OK'">
+          Thanks for your submission!
+        </p>
+        <p class="text-danger" v-if="submitStatus === 'ERROR'">
+          Please fill the form correctly.
+        </p>
         <b-form-select v-model="computedAuthor" :options="selectAuthor">
         </b-form-select>
         <b-form-select v-model="computedGenre" :options="selectGenre">
@@ -66,6 +62,7 @@ export default {
         booktitle: "",
         releaseyear: "",
       },
+      submitStatus: null,
     };
   },
   computed: {
@@ -90,6 +87,7 @@ export default {
     createdBook: function () {
       this.$v.book.$touch();
       if (this.$v.$invalid) {
+        this.submitStatus = "ERROR";
       } else {
         this.$emit("createdBook", {
           booktitle: this.book.booktitle,
@@ -98,16 +96,37 @@ export default {
           authorid: this.computedAuthor,
           genreid: this.computedGenre,
         });
+        this.submitStatus = "OK";
+        this.book.booktitle = "";
+        this.book.releaseyear = "";
       }
     },
   },
   validations: {
     book: {
-      booktitle: { required },
+      booktitle: {
+        required,
+        isUnique(value) {
+          // standalone validator ideally should not assume a field is required
+          if (value === "") return true;
+
+          // simulate async call, fail for all logins with even length
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve(typeof value === "string" && value.length % 2 !== 0);
+            }, 350 + Math.random() * 300);
+          });
+        },
+      },
       releaseyear: { required, numeric },
     },
   },
 };
 </script>
 
-<style></style>
+<style>
+p {
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+</style>

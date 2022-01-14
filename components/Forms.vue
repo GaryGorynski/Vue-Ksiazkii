@@ -74,6 +74,7 @@ export default {
     },
     createBook: function (event) {
       this.authorprops.booklist.push(event);
+      console.log(this.authorprops.booklist);
       let items = {
         title:
           this.authorprops.booklist[this.authorprops.booklist.length - 1][
