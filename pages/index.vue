@@ -2,7 +2,6 @@
   <div>
     <Modals />
     <Forms />
-    <Searchbar />
   </div>
 </template>
 

@@ -14,12 +14,13 @@
       v-on:updateSelectGenre="updateSelectGenre($event)"
     />
     <div>
-      <b-table v-model="items.X" striped hover :items="items">
+      <b-table :fields="fields" striped hover :items="items">
         <template #cell(X)="{ item }">
           <b class="text-danger" @click="deleteRow(item)">X</b>
         </template>
       </b-table>
     </div>
+    <div></div>
   </div>
 </template>
 <script>
@@ -43,24 +44,23 @@ export default {
         selectGenre: [{ value: null, text: "Genre" }],
         booklist: [],
       },
-      items: [
-        {
-          title: "",
-          author: "",
-          bookID: "",
-          releaseYear: "",
-          authorID: "",
-          genre: "",
-          genreID: "",
-          X: "",
-        },
+      fields: [
+        "title",
+        "author",
+        "bookID",
+        "releaseYear",
+        "authorID",
+        "genre",
+        "genreID",
+        "X",
       ],
+      items: [],
     };
   },
   validations: {
     book: {
-      booktitle: { required },
-      releaseyear: { required, numeric },
+      title: { required },
+      releaseYear: { required, numeric },
     },
   },
 
@@ -74,38 +74,13 @@ export default {
     },
     createBook: function (event) {
       this.authorprops.booklist.push(event);
-      console.log(this.authorprops.booklist);
-      let items = {
-        title:
-          this.authorprops.booklist[this.authorprops.booklist.length - 1][
-            "booktitle"
-          ],
-        author:
-          this.authorprops.selectAuthor[
-            this.authorprops.selectAuthor.length - 1
-          ]["text"],
-
-        bookID: this.authorprops.booklist.length - 1,
-        releaseYear:
-          this.authorprops.booklist[this.authorprops.booklist.length - 1][
-            "releaseyear"
-          ],
-        authorID:
-          this.authorprops.booklist[this.authorprops.booklist.length - 1][
-            "authorid"
-          ],
-        genre:
-          this.authorprops.selectGenre[this.authorprops.selectGenre.length - 1][
-            "text"
-          ],
-        genreID:
-          this.authorprops.booklist[this.authorprops.booklist.length - 1][
-            "genreid"
-          ],
-        X: "X",
-      };
-
-      this.items.push(items);
+      // console.log(this.authorprops.booklist);
+      this.items.push({
+        ...event,
+        author: "dupa",
+        genre: "dupa",
+      });
+      console.log(this.items);
     },
     deleteRow: function (dupa) {
       const filtered = this.items.filter((test) => test !== dupa);

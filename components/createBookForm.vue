@@ -3,13 +3,11 @@
     <b-row class="my-5">
       <b-col sm="6">
         <b-form-input
-          v-model="$v.book.booktitle.$model"
+          v-model="$v.book.title.$model"
           placeholder="Book title"
           type="text"
         ></b-form-input>
-        <div class="error" v-if="!$v.book.booktitle.isUnique">
-          This username is already registered.
-        </div>
+
         <p class="text-success" v-if="submitStatus === 'OK'">
           Thanks for your submission!
         </p>
@@ -19,7 +17,7 @@
         </p>
 
         <b-form-input
-          v-model="$v.book.releaseyear.$model"
+          v-model="$v.book.releaseYear.$model"
           placeholder="Release year"
           type="text"
         ></b-form-input>
@@ -29,6 +27,7 @@
         <p class="text-danger" v-if="submitStatus === 'ERROR'">
           Please fill the form correctly.
         </p>
+
         <b-form-select v-model="computedAuthor" :options="selectAuthor">
         </b-form-select>
         <b-form-select v-model="computedGenre" :options="selectGenre">
@@ -59,10 +58,11 @@ export default {
   data() {
     return {
       book: {
-        booktitle: "",
-        releaseyear: "",
+        title: "",
+        releaseYear: "",
       },
       submitStatus: null,
+      test: "",
     };
   },
   computed: {
@@ -90,11 +90,11 @@ export default {
         this.submitStatus = "ERROR";
       } else {
         this.$emit("createdBook", {
-          booktitle: this.book.booktitle,
-          releaseyear: this.book.releaseyear,
-          bookid: this.booklist.length - 1,
-          authorid: this.computedAuthor,
-          genreid: this.computedGenre,
+          title: this.book.title,
+          releaseYear: this.book.releaseYear,
+          bookID: this.booklist.length - 1,
+          authorID: this.computedAuthor,
+          genreID: this.computedGenre,
         });
         this.submitStatus = "OK";
         this.book.booktitle = "";
@@ -104,21 +104,10 @@ export default {
   },
   validations: {
     book: {
-      booktitle: {
+      title: {
         required,
-        isUnique(value) {
-          // standalone validator ideally should not assume a field is required
-          if (value === "") return true;
-
-          // simulate async call, fail for all logins with even length
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve(typeof value === "string" && value.length % 2 !== 0);
-            }, 350 + Math.random() * 300);
-          });
-        },
       },
-      releaseyear: { required, numeric },
+      releaseYear: { required, numeric },
     },
   },
 };
