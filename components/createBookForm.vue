@@ -86,9 +86,15 @@ export default {
   },
   methods: {
     createdBook: function () {
-      this.$v.book.$touch();
+      /*   this.$v.book.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
+      } */ if (
+        !this.selectAuthor.includes(
+          this.selectAuthor.find(({ value }) => value === this.computedAuthor)
+        )
+      ) {
+        alert("Dodaj tego autora");
       } else {
         this.$emit("createdBook", {
           title: this.book.title,
@@ -103,14 +109,11 @@ export default {
           authorID: this.computedAuthor,
           genreID: this.computedGenre,
         });
-
-        console.log(
-          this.selectAuthor.find(({ value }) => value === this.computedAuthor)
-        );
         this.submitStatus = "OK";
         this.book.booktitle = "";
         this.book.releaseyear = "";
       }
+      console.log(this.selectAuthor);
     },
   },
   validations: {
