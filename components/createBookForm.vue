@@ -87,33 +87,30 @@ export default {
   methods: {
     createdBook: function () {
       this.$v.book.$touch();
-      if (
-        !this.selectAuthor.includes(
-          this.selectAuthor.find(({ value }) => value === this.computedAuthor)
-        )
-      ) {
-        alert("Stwórz Autora");
-      } else if (this.$v.$invalid) {
+      if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
       } else {
+        const author = this.selectAuthor.find(
+          ({ value }) => value === this.computedAuthor
+        );
+        const genre = this.selectGenre.find(
+          ({ value }) => value === this.computedGenre
+        );
+        if (!author || !genre) return;
+
         this.$emit("createdBook", {
           title: this.book.title,
-          author: this.selectAuthor.find(
-            ({ value }) => value === this.computedAuthor
-          )["text"],
-          genre: this.selectGenre.find(
-            ({ value }) => value === this.computedGenre
-          )["text"],
+          author: author["text"],
+          genre: genre["text"],
           releaseYear: this.book.releaseYear,
           bookID: this.booklist.length - 1,
           authorID: this.computedAuthor,
           genreID: this.computedGenre,
         });
         this.submitStatus = "OK";
-        this.book.booktitle = "";
-        this.book.releaseyear = "";
+        this.book.title = "";
+        this.book.releaseYear = "";
       }
-      console.log(this.selectAuthor);
     },
   },
   validations: {

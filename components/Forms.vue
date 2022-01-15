@@ -12,17 +12,18 @@
 
     <CreateBookForm
       v-bind="props"
+      v-on:updatedBooklist="updateBooklist($event)"
       v-on:createdBook="createBook($event)"
       v-on:updateSelectAuthor="updateSelectAuthor($event)"
       v-on:updateSelectGenre="updateSelectGenre($event)"
     />
-    <b-form-input
-      id="filter-input"
-      v-model="filter"
-      type="search"
-      placeholder="Type to Search"
-    ></b-form-input>
     <div>
+      <b-form-input
+        id="filter-input"
+        v-model="filter"
+        type="search"
+        placeholder="Type to Search"
+      ></b-form-input>
       <b-table
         :filter="filter"
         :filter-included-fields="filterOn"
@@ -93,15 +94,16 @@ export default {
         ...event,
       });
     },
-    deleteRow: function (dupa) {
-      const filtered = this.props.booklist.filter((test) => test !== dupa);
-      this.props.booklist = filtered;
-    },
+
     updateSelectAuthor: function (event) {
       this.props.selectedAuthor = event;
     },
     updateSelectGenre: function (event) {
       this.props.selectedGenre = event;
+    },
+    deleteRow: function (dupa) {
+      const filtered = this.props.booklist.filter((test) => test !== dupa);
+      this.props.booklist = filtered;
     },
   },
 };
