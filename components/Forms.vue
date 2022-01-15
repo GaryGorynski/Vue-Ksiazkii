@@ -1,8 +1,14 @@
 <template>
   <div class="forms">
-    <AuthorForm v-bind="props" v-on:submitedAuthor="submitAuthor($event)" />
+    <AuthorForm
+      :selectAuthor="props.selectAuthor"
+      v-on:submitedAuthor="submitAuthor($event)"
+    />
 
-    <GenreForm v-bind="props" v-on:submitedGenre="submitGenre($event)" />
+    <GenreForm
+      :selectGenre="props.selectGenre"
+      v-on:submitedGenre="submitGenre($event)"
+    />
 
     <CreateBookForm
       v-bind="props"
@@ -10,14 +16,26 @@
       v-on:updateSelectAuthor="updateSelectAuthor($event)"
       v-on:updateSelectGenre="updateSelectGenre($event)"
     />
+    <b-form-input
+      id="filter-input"
+      v-model="filter"
+      type="search"
+      placeholder="Type to Search"
+    ></b-form-input>
     <div>
-      <b-table :fields="fields" striped hover :items="props.booklist">
+      <b-table
+        :filter="filter"
+        :filter-included-fields="filterOn"
+        :fields="fields"
+        striped
+        hover
+        :items="props.booklist"
+      >
         <template #cell(X)="{ item }">
           <b class="text-danger" @click="deleteRow(item)">X</b>
         </template>
       </b-table>
     </div>
-    <div></div>
   </div>
 </template>
 <script>
@@ -37,7 +55,7 @@ export default {
       props: {
         selectedAuthor: null,
         selectedGenre: null,
-        selectAuthor: [{ value: null, text: "Author" }],
+        selectAuthor: [{ value: "null", text: "Author" }],
         selectGenre: [{ value: null, text: "Genre" }],
         booklist: [],
       },
@@ -51,6 +69,8 @@ export default {
         "genreID",
         "X",
       ],
+      filter: null,
+      filterOn: [],
     };
   },
   validations: {
@@ -75,6 +95,7 @@ export default {
         author: "dupa",
         genre: "dupa",
       });
+      console.log(this.author);
     },
     deleteRow: function (dupa) {
       const filtered = this.props.booklist.filter((test) => test !== dupa);

@@ -17,6 +17,7 @@
           type="submit"
           value="create genre"
           @click="submitedGenre"
+          @keyup.enter="submitedGenre"
           >Create Genre</b-button
         >
       </b-col>
@@ -28,7 +29,7 @@
 import { required } from "vuelidate/lib/validators";
 export default {
   props: {
-    selectGenre: Array,
+    selectGenre: { type: Array, required: true },
   },
   data() {
     return {

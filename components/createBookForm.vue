@@ -37,6 +37,7 @@
           type="submit"
           value="create author"
           @click="createdBook"
+          @keyup.enter="createdBook"
           aria-required="true"
           >Create Book</b-button
         >

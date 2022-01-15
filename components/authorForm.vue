@@ -32,6 +32,7 @@
           variant="primary"
           type="submit"
           value="create author"
+          @keyup.enter="submitedAuthor"
           @click="submitedAuthor"
           >Create Author</b-button
         >
@@ -44,7 +45,7 @@
 import { required } from "vuelidate/lib/validators";
 export default {
   props: {
-    selectAuthor: Array,
+    selectAuthor: { type: Array, required: true },
   },
   data() {
     return {
