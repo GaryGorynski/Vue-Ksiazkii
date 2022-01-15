@@ -111,6 +111,6 @@ export default {
 
 <style>
 .forms {
-  margin-left: 50px;
+  margin-left: 100px;
 }
 </style>
