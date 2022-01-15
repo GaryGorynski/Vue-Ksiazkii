@@ -1,20 +1,17 @@
 <template>
   <div class="forms">
-    <AuthorForm
-      v-bind="authorprops"
-      v-on:submitedAuthor="submitAuthor($event)"
-    />
+    <AuthorForm v-bind="props" v-on:submitedAuthor="submitAuthor($event)" />
 
-    <GenreForm v-bind="authorprops" v-on:submitedGenre="submitGenre($event)" />
+    <GenreForm v-bind="props" v-on:submitedGenre="submitGenre($event)" />
 
     <CreateBookForm
-      v-bind="authorprops"
+      v-bind="props"
       v-on:createdBook="createBook($event)"
       v-on:updateSelectAuthor="updateSelectAuthor($event)"
       v-on:updateSelectGenre="updateSelectGenre($event)"
     />
     <div>
-      <b-table :fields="fields" striped hover :items="items">
+      <b-table :fields="fields" striped hover :items="props.booklist">
         <template #cell(X)="{ item }">
           <b class="text-danger" @click="deleteRow(item)">X</b>
         </template>
@@ -37,7 +34,7 @@ export default {
   },
   data() {
     return {
-      authorprops: {
+      props: {
         selectedAuthor: null,
         selectedGenre: null,
         selectAuthor: [{ value: null, text: "Author" }],
@@ -54,7 +51,6 @@ export default {
         "genreID",
         "X",
       ],
-      items: [],
     };
   },
   validations: {
@@ -66,31 +62,29 @@ export default {
 
   methods: {
     submitAuthor: function (event) {
-      this.authorprops.selectAuthor.push(event);
-      console.log(this.authorprops.selectAuthor);
+      this.props.selectAuthor.push(event);
+      console.log(this.props.selectAuthor);
     },
     submitGenre: function (event) {
-      this.authorprops.selectGenre.push(event);
+      this.props.selectGenre.push(event);
     },
     createBook: function (event) {
-      this.authorprops.booklist.push(event);
-      // console.log(this.authorprops.booklist);
-      this.items.push({
+      // console.log(this.props.booklist);
+      this.props.booklist.push({
         ...event,
         author: "dupa",
         genre: "dupa",
       });
-      console.log(this.items);
     },
     deleteRow: function (dupa) {
-      const filtered = this.items.filter((test) => test !== dupa);
-      this.items = filtered;
+      const filtered = this.props.booklist.filter((test) => test !== dupa);
+      this.props.booklist = filtered;
     },
     updateSelectAuthor: function (event) {
-      this.authorprops.selectedAuthor = event;
+      this.props.selectedAuthor = event;
     },
     updateSelectGenre: function (event) {
-      this.authorprops.selectedGenre = event;
+      this.props.selectedGenre = event;
     },
   },
 };
