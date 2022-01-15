@@ -92,11 +92,21 @@ export default {
       } else {
         this.$emit("createdBook", {
           title: this.book.title,
+          author: this.selectAuthor.find(
+            ({ value }) => value === this.computedAuthor
+          )["text"],
+          genre: this.selectGenre.find(
+            ({ value }) => value === this.computedGenre
+          )["text"],
           releaseYear: this.book.releaseYear,
           bookID: this.booklist.length - 1,
           authorID: this.computedAuthor,
           genreID: this.computedGenre,
         });
+
+        console.log(
+          this.selectAuthor.find(({ value }) => value === this.computedAuthor)
+        );
         this.submitStatus = "OK";
         this.book.booktitle = "";
         this.book.releaseyear = "";

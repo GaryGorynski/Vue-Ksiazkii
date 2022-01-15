@@ -83,7 +83,6 @@ export default {
   methods: {
     submitAuthor: function (event) {
       this.props.selectAuthor.push(event);
-      console.log(this.props.selectAuthor);
     },
     submitGenre: function (event) {
       this.props.selectGenre.push(event);
@@ -92,10 +91,7 @@ export default {
       // console.log(this.props.booklist);
       this.props.booklist.push({
         ...event,
-        author: "dupa",
-        genre: "dupa",
       });
-      console.log(this.author);
     },
     deleteRow: function (dupa) {
       const filtered = this.props.booklist.filter((test) => test !== dupa);
