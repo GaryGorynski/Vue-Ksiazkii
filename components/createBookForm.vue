@@ -86,15 +86,15 @@ export default {
   },
   methods: {
     createdBook: function () {
-      /*   this.$v.book.$touch();
-      if (this.$v.$invalid) {
-        this.submitStatus = "ERROR";
-      } */ if (
+      this.$v.book.$touch();
+      if (
         !this.selectAuthor.includes(
           this.selectAuthor.find(({ value }) => value === this.computedAuthor)
         )
       ) {
-        alert("Dodaj tego autora");
+        alert("Stwórz Autora");
+      } else if (this.$v.$invalid) {
+        this.submitStatus = "ERROR";
       } else {
         this.$emit("createdBook", {
           title: this.book.title,
