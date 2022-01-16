@@ -17,26 +17,10 @@
       v-on:updateSelectAuthor="updateSelectAuthor($event)"
       v-on:updateSelectGenre="updateSelectGenre($event)"
     />
-    <div>
-      <b-form-input
-        id="filter-input"
-        v-model="filter"
-        type="search"
-        placeholder="Type to Search"
-      ></b-form-input>
-      <b-table
-        :filter="filter"
-        :filter-included-fields="filterOn"
-        :fields="fields"
-        striped
-        hover
-        :items="props.booklist"
-      >
-        <template #cell(X)="{ item }">
-          <b class="text-danger" @click="deleteRow(item)">X</b>
-        </template>
-      </b-table>
-    </div>
+    <Table
+      v-on:computedBooklist="computeBooklist($event)"
+      :booklist="props.booklist"
+    />
   </div>
 </template>
 <script>
@@ -44,12 +28,13 @@ import { required, numeric } from "vuelidate/lib/validators";
 import authorForm from "./authorForm.vue";
 import genreForm from "./genreForm.vue";
 import createBookForm from "./createBookForm.vue";
-
+import Table from "./Table.vue";
 export default {
   components: {
     AuthorForm: authorForm,
     GenreForm: genreForm,
     CreateBookForm: createBookForm,
+    Table: Table,
   },
   data() {
     return {
@@ -60,18 +45,6 @@ export default {
         selectGenre: [{ value: null, text: "Genre" }],
         booklist: [],
       },
-      fields: [
-        "title",
-        "author",
-        "bookID",
-        "releaseYear",
-        "authorID",
-        "genre",
-        "genreID",
-        "X",
-      ],
-      filter: null,
-      filterOn: [],
     };
   },
   validations: {
@@ -102,9 +75,8 @@ export default {
     updateSelectGenre: function (event) {
       this.props.selectedGenre = event;
     },
-    deleteRow: function (dupa) {
-      const filtered = this.props.booklist.filter((test) => test !== dupa);
-      this.props.booklist = filtered;
+    computeBooklist: function (event) {
+      this.props.booklist = event;
     },
   },
 };

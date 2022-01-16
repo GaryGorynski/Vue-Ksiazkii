@@ -96,6 +96,9 @@ export default {
         const genre = this.selectGenre.find(
           ({ value }) => value === this.computedGenre
         );
+
+        const bookID =
+          this.booklist.length - 1 < 0 ? 0 : this.booklist.length - 1 + 1;
         if (!author || !genre) return;
 
         this.$emit("createdBook", {
@@ -103,10 +106,11 @@ export default {
           author: author["text"],
           genre: genre["text"],
           releaseYear: this.book.releaseYear,
-          bookID: this.booklist.length - 1,
+          bookID: bookID,
           authorID: this.computedAuthor,
           genreID: this.computedGenre,
         });
+
         this.submitStatus = "OK";
         this.book.title = "";
         this.book.releaseYear = "";
