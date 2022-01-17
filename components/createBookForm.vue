@@ -85,45 +85,83 @@ export default {
     },
   },
   methods: {
-    recursive: function () {
-      let bookID = Math.floor(Math.random() * 100000);
-      const author = this.selectAuthor.find(
-        ({ value }) => value === this.computedAuthor
-      );
-      const genre = this.selectGenre.find(
-        ({ value }) => value === this.computedGenre
-      );
-      if (!author || !genre) return;
+    generateId() {
+      const id = Math.floor(Math.random() * 100000);
 
-      if (bookID !== this.booklist.find((book) => book.bookID)) {
-        bookID = Math.floor(Math.random() * 100000);
+      if (this.booklist.find((book) => book.bookID === id)) {
+        return this.generateId();
       } else {
-        this.recursive(bookID + 1);
+        return id;
       }
-      this.$emit("createdBook", {
-        title: this.book.title,
-        author: author["text"],
-        genre: genre["text"],
-        releaseYear: this.book.releaseYear,
-        bookID: bookID,
-        authorID: this.computedAuthor,
-        genreID: this.computedGenre,
-      });
-
-      this.submitStatus = "OK";
-      this.book.title = "";
-      this.book.releaseYear = "";
     },
 
-    createBook: function () {
+    createBook() {
       this.$v.book.$touch();
 
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
       } else {
-        this.recursive();
+        const bookID = this.generateId();
+        const author = this.selectAuthor.find(
+          ({ value }) => value === this.computedAuthor
+        );
+        const genre = this.selectGenre.find(
+          ({ value }) => value === this.computedGenre
+        );
+
+        if (!author || !genre) return;
+
+        this.$emit("createdBook", {
+          title: this.book.title,
+          author: author["text"],
+          genre: genre["text"],
+          releaseYear: this.book.releaseYear,
+          bookID: bookID,
+          authorID: this.computedAuthor,
+          genreID: this.computedGenre,
+        });
       }
-    },
+    }
+
+    // recursive: function () {
+    //   let bookID = Math.floor(Math.random() * 100000);
+    //   const author = this.selectAuthor.find(
+    //     ({ value }) => value === this.computedAuthor
+    //   );
+    //   const genre = this.selectGenre.find(
+    //     ({ value }) => value === this.computedGenre
+    //   );
+    //   if (!author || !genre) return;
+
+    //   if (bookID !== this.booklist.find((book) => book.bookID)) {
+    //     bookID = Math.floor(Math.random() * 100000);
+    //   } else {
+    //     this.recursive(bookID + 1);
+    //   }
+    //   this.$emit("createdBook", {
+    //     title: this.book.title,
+    //     author: author["text"],
+    //     genre: genre["text"],
+    //     releaseYear: this.book.releaseYear,
+    //     bookID: bookID,
+    //     authorID: this.computedAuthor,
+    //     genreID: this.computedGenre,
+    //   });
+
+    //   this.submitStatus = "OK";
+    //   this.book.title = "";
+    //   this.book.releaseYear = "";
+    // },
+
+    // createBook: function () {
+    //   this.$v.book.$touch();
+
+    //   if (this.$v.$invalid) {
+    //     this.submitStatus = "ERROR";
+    //   } else {
+    //     this.recursive();
+    //   }
+    // },
   },
   validations: {
     book: {
