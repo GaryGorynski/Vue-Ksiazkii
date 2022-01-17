@@ -12,8 +12,7 @@
 
     <CreateBookForm
       v-bind="props"
-      v-on:updatedBooklist="updateBooklist($event)"
-      v-on:createdBook="createBook($event)"
+      v-on:createdBook="updateBooklist($event)"
       v-on:updateSelectAuthor="updateSelectAuthor($event)"
       v-on:updateSelectGenre="updateSelectGenre($event)"
     />
@@ -59,7 +58,7 @@ export default {
     submitGenre: function (event) {
       this.props.selectGenre.push(event);
     },
-    createBook: function (event) {
+    updateBooklist: function (event) {
       console.log(this.props.booklist);
       this.props.booklist.push({
         ...event,
@@ -73,9 +72,11 @@ export default {
       this.props.selectedGenre = event;
     },
     deleteBook: function (event) {
-      let dupa = this.props.booklist.filter((book) => book.bookID !== event);
+      let filteredBooklist = this.props.booklist.filter(
+        (book) => book.bookID !== event
+      );
 
-      this.props.booklist = dupa;
+      this.props.booklist = filteredBooklist;
     },
   },
 };

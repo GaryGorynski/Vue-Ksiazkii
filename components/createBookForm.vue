@@ -36,7 +36,7 @@
           variant="success"
           type="submit"
           value="create author"
-          @click="createdBook"
+          @click="createBook"
           @keyup.enter="createdBook"
           aria-required="true"
           >Create Book</b-button
@@ -85,10 +85,11 @@ export default {
     },
   },
   methods: {
-    createdBook: function () {
+    createBook: function () {
       this.$v.book.$touch();
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
+        //
       } else {
         const author = this.selectAuthor.find(
           ({ value }) => value === this.computedAuthor
@@ -97,8 +98,6 @@ export default {
           ({ value }) => value === this.computedGenre
         );
 
-        const bookID =
-          this.booklist.length - 1 < 0 ? 0 : this.booklist.length - 1 + 1;
         if (!author || !genre) return;
 
         this.$emit("createdBook", {
@@ -106,11 +105,13 @@ export default {
           author: author["text"],
           genre: genre["text"],
           releaseYear: this.book.releaseYear,
-          bookID: bookID,
+          bookID: Math.floor(Math.random() * 100000),
           authorID: this.computedAuthor,
           genreID: this.computedGenre,
         });
-
+        // Stwórz książkę z bookID = numer,  jeśli  w liście książek jest książka z bookID = numer,  zrób równanie jescze raz
+        // jeśli lista książek ma książkę z id nowej książki, policz jeszcz eraz
+        //  przefiltruj bookliste -  booklist.filter (book) => book.bookID jeśli bookID === bookID  to {}
         this.submitStatus = "OK";
         this.book.title = "";
         this.book.releaseYear = "";
