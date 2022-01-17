@@ -97,19 +97,11 @@ export default {
         const genre = this.selectGenre.find(
           ({ value }) => value === this.computedGenre
         );
-        const bookID = Math.floor(Math.random() * 100000);
+        let bookID = Math.floor(Math.random() * 100000);
 
         if (!author || !genre) return;
         else if (this.booklist.find((book) => book.bookID === bookID)) {
-          this.$emit("createdBook", {
-            title: this.book.title,
-            author: author["text"],
-            genre: genre["text"],
-            releaseYear: this.book.releaseYear,
-            bookID: bookID,
-            authorID: this.computedAuthor,
-            genreID: this.computedGenre,
-          });
+          bookID = Math.floor(Math.random() * 100000);
         }
 
         this.$emit("createdBook", {

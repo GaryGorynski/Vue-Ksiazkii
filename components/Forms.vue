@@ -61,6 +61,7 @@ export default {
       this.props.booklist.push({
         ...event,
       });
+      console.log(this.props.booklist);
     },
 
     updateSelectAuthor: function (event) {
