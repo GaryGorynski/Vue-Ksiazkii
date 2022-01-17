@@ -61,7 +61,8 @@ export default {
       this.props.booklist.push({
         ...event,
       });
-      console.log(this.props.booklist);
+      this.props.selectedAuthor = null;
+      this.props.selectedGenre = null;
     },
 
     updateSelectAuthor: function (event) {

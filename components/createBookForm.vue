@@ -17,6 +17,7 @@
         </p>
 
         <b-form-input
+          @keyup.enter="createBook"
           v-model="$v.book.releaseYear.$model"
           placeholder="Release year"
           type="text"
@@ -24,20 +25,32 @@
         <p class="text-success" v-if="submitStatus === 'OK'">
           Thanks for your submission!
         </p>
+
         <p class="text-danger" v-if="submitStatus === 'ERROR'">
-          Please fill the form correctly.
+          Please fill the form correctly. It has to be a number.
         </p>
 
         <b-form-select v-model="computedAuthor" :options="selectAuthor">
         </b-form-select>
+        <p class="text-danger" v-if="submitStatus === 'ERROR'">
+          Please fill the form correctly.
+        </p>
+        <p class="text-success" v-if="submitStatus === 'OK'">
+          Thanks for your submission!
+        </p>
         <b-form-select v-model="computedGenre" :options="selectGenre">
         </b-form-select>
+        <p class="text-danger" v-if="submitStatus === 'ERROR'">
+          Please fill the form correctly.
+        </p>
+        <p class="text-success" v-if="submitStatus === 'OK'">
+          Thanks for your submission!
+        </p>
         <b-button
           variant="success"
           type="submit"
           value="create author"
           @click="createBook"
-          @keyup.enter="createBook"
           aria-required="true"
           >Create Book</b-button
         >
@@ -63,7 +76,7 @@ export default {
         releaseYear: "",
       },
       submitStatus: null,
-      test: "",
+      releaseYearStatus: null,
     };
   },
   computed: {
@@ -85,43 +98,52 @@ export default {
     },
   },
   methods: {
-    recursive: function () {
-      let bookID = Math.floor(Math.random() * 100000);
-      const author = this.selectAuthor.find(
-        ({ value }) => value === this.computedAuthor
-      );
-      const genre = this.selectGenre.find(
-        ({ value }) => value === this.computedGenre
-      );
-      if (!author || !genre) return;
+    generateId() {
+      const id = Math.floor(Math.random() * 100000);
 
-      if (bookID !== this.booklist.find((book) => book.bookID)) {
-        bookID = Math.floor(Math.random() * 100000);
+      if (this.booklist.find((book) => book.bookID === id)) {
+        return this.generateId();
       } else {
-        this.recursive(bookID + 1);
+        return id;
       }
-      this.$emit("createdBook", {
-        title: this.book.title,
-        author: author["text"],
-        genre: genre["text"],
-        releaseYear: this.book.releaseYear,
-        bookID: bookID,
-        authorID: this.computedAuthor,
-        genreID: this.computedGenre,
-      });
-
-      this.submitStatus = "OK";
-      this.book.title = "";
-      this.book.releaseYear = "";
     },
 
-    createBook: function () {
+    createBook() {
       this.$v.book.$touch();
 
-      if (this.$v.$invalid) {
+      if (
+        this.$v.$invalid ||
+        this.selectedAuthor === null ||
+        this.selectedGenre === null ||
+        this.$v.book.releaseYear === NaN
+      ) {
         this.submitStatus = "ERROR";
+        this.releaseYearStatus = "Error";
       } else {
-        this.recursive();
+        const bookID = this.generateId();
+        const author = this.selectAuthor.find(
+          ({ value }) => value === this.computedAuthor
+        );
+        const genre = this.selectGenre.find(
+          ({ value }) => value === this.computedGenre
+        );
+
+        if (!author || !genre) return;
+
+        this.$emit("createdBook", {
+          title: this.book.title,
+          author: author["text"],
+          genre: genre["text"],
+          releaseYear: this.book.releaseYear,
+          bookID: bookID,
+          authorID: this.computedAuthor,
+          genreID: this.computedGenre,
+        });
+        this.book.title = "";
+        this.book.releaseYear = "";
+
+        this.submitStatus = "OK";
+        this.releaseYearStatus = "OK";
       }
     },
   },

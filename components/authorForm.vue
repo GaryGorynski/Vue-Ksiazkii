@@ -19,6 +19,7 @@
           type="text"
           placeholder="Author last name"
           v-model="$v.author.text.$model"
+          @keyup.enter="submitedAuthor"
         >
         </b-form-input>
         <p class="text-success" v-if="submitStatus === 'OK'">
@@ -30,9 +31,8 @@
 
         <b-button
           variant="primary"
-          type="submit"
+          type="button"
           value="create author"
-          @keyup.enter="submitedAuthor"
           @click="submitedAuthor"
           >Create Author</b-button
         >

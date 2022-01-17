@@ -5,6 +5,7 @@
         <b-form-input
           v-model="$v.genre.value.$model"
           placeholder="Genre"
+          @keyup.enter="submitedGenre"
         ></b-form-input>
         <p class="text-success" v-if="submitStatus === 'OK'">
           Thanks for your submission!
@@ -17,7 +18,6 @@
           type="submit"
           value="create genre"
           @click="submitedGenre"
-          @keyup.enter="submitedGenre"
           >Create Genre</b-button
         >
       </b-col>
