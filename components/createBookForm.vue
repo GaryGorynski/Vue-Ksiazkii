@@ -85,38 +85,43 @@ export default {
     },
   },
   methods: {
+    recursive: function () {
+      let bookID = Math.floor(Math.random() * 100000);
+      const author = this.selectAuthor.find(
+        ({ value }) => value === this.computedAuthor
+      );
+      const genre = this.selectGenre.find(
+        ({ value }) => value === this.computedGenre
+      );
+      if (!author || !genre) return;
+
+      if (bookID !== this.booklist.find((book) => book.bookID)) {
+        bookID = Math.floor(Math.random() * 100000);
+      } else {
+        this.abba(bookID + 1);
+      }
+      this.$emit("createdBook", {
+        title: this.book.title,
+        author: author["text"],
+        genre: genre["text"],
+        releaseYear: this.book.releaseYear,
+        bookID: bookID,
+        authorID: this.computedAuthor,
+        genreID: this.computedGenre,
+      });
+
+      this.submitStatus = "OK";
+      this.book.title = "";
+      this.book.releaseYear = "";
+    },
+
     createBook: function () {
       this.$v.book.$touch();
 
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
       } else {
-        const author = this.selectAuthor.find(
-          ({ value }) => value === this.computedAuthor
-        );
-        const genre = this.selectGenre.find(
-          ({ value }) => value === this.computedGenre
-        );
-        let bookID = Math.floor(Math.random() * 100000);
-        if (!author || !genre) return;
-        else if (bookID !== this.booklist.find((book) => book.bookID)) {
-          bookID = Math.floor(Math.random() * 100000);
-        } else {
-          this.createBook();
-        }
-        this.$emit("createdBook", {
-          title: this.book.title,
-          author: author["text"],
-          genre: genre["text"],
-          releaseYear: this.book.releaseYear,
-          bookID: bookID,
-          authorID: this.computedAuthor,
-          genreID: this.computedGenre,
-        });
-
-        this.submitStatus = "OK";
-        this.book.title = "";
-        this.book.releaseYear = "";
+        this.recursive();
       }
     },
   },
