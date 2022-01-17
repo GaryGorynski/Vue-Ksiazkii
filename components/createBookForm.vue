@@ -87,9 +87,9 @@ export default {
   methods: {
     createBook: function () {
       this.$v.book.$touch();
+
       if (this.$v.$invalid) {
         this.submitStatus = "ERROR";
-        //
       } else {
         const author = this.selectAuthor.find(
           ({ value }) => value === this.computedAuthor
@@ -98,25 +98,23 @@ export default {
           ({ value }) => value === this.computedGenre
         );
         let bookID = Math.floor(Math.random() * 100000);
-
         if (!author || !genre) return;
-        else if (this.booklist.find((book) => book.bookID === bookID)) {
-          bookID = Math.floor(Math.random() * 100000);
-        }
+        else if (bookID !== this.booklist.find((book) => book.bookID)) {
+          this.$emit("createdBook", {
+            title: this.book.title,
+            author: author["text"],
+            genre: genre["text"],
+            releaseYear: this.book.releaseYear,
+            bookID: bookID,
+            authorID: this.computedAuthor,
+            genreID: this.computedGenre,
+          });
 
-        this.$emit("createdBook", {
-          title: this.book.title,
-          author: author["text"],
-          genre: genre["text"],
-          releaseYear: this.book.releaseYear,
-          bookID: bookID,
-          authorID: this.computedAuthor,
-          genreID: this.computedGenre,
-        });
-
-        this.submitStatus = "OK";
-        this.book.title = "";
-        this.book.releaseYear = "";
+          this.submitStatus = "OK";
+          this.book.title = "";
+          this.book.releaseYear = "";
+          console.log("dupa");
+        } else this.createBook();
       }
     },
   },
