@@ -1,15 +1,11 @@
 <template>
   <div>
     <div>
-      <b-tab title="Books">
+      <b-tab @click="test" title="Books">
         <b-button v-b-modal.modal-1 variant="link">Books</b-button>
+
         <b-modal id="modal-1">
           <template #modal-header> Tytuł książki </template>
-          <ol>
-            <li id="modalBookGenre">Gatunek:</li>
-            <li id="modalBookAuth">Autor:</li>
-            <li id="modalBookLang">Język:</li>
-          </ol>
           <template #modal-footer>
             <a href="#" id="modalAudio">Pobierz Audiobook</a>
           </template>
@@ -20,7 +16,24 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+export default {
+  data() {
+    return {
+      info: null,
+    };
+  },
+  mounted() {
+    axios
+      .get("https://wolnelektury.pl/api/books/")
+      .then((response) => (this.info = response.data));
+  },
+  methods: {
+    test: function () {
+      console.log(this.info);
+    },
+  },
+};
 </script>
 
 <style></style>

@@ -14,7 +14,25 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      info: null,
+    };
+  },
+  mounted() {
+    axios
+      .get("https://wolnelektury.pl/api/books/")
+      .then((response) => (this.info = response));
+  },
+  computed: {
+    test: function () {
+      let dupa = this.info;
+
+      console.log(dupa);
+    },
+  },
+};
 </script>
 
 <style></style>
