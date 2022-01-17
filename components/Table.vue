@@ -47,9 +47,6 @@ export default {
       get: function () {
         return this.booklist;
       },
-      set: function (value) {
-        this.$emit("computedBooklist", value);
-      },
     },
   },
   methods: {
