@@ -50,9 +50,9 @@ export default {
     },
   },
   methods: {
-    deleteRow: function (dupa) {
-      const filtered = this.computedBooklist.filter((test) => test !== dupa);
-      this.computedBooklist = filtered;
+    deleteRow: function (item) {
+      const filtered = item.bookID;
+      this.$emit("deleteID", filtered);
     },
   },
 };

@@ -17,10 +17,7 @@
       v-on:updateSelectAuthor="updateSelectAuthor($event)"
       v-on:updateSelectGenre="updateSelectGenre($event)"
     />
-    <Table
-      v-on:computedBooklist="computeBooklist($event)"
-      :booklist="props.booklist"
-    />
+    <Table v-on:deleteID="deleteBook($event)" :booklist="props.booklist" />
   </div>
 </template>
 <script>
@@ -75,8 +72,10 @@ export default {
     updateSelectGenre: function (event) {
       this.props.selectedGenre = event;
     },
-    computeBooklist: function (event) {
-      this.props.booklist = event;
+    deleteBook: function (event) {
+      let dupa = this.props.booklist.filter((book) => book.bookID !== event);
+
+      this.props.booklist = dupa;
     },
   },
 };
