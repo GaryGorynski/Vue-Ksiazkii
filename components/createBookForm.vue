@@ -98,7 +98,7 @@ export default {
       if (bookID !== this.booklist.find((book) => book.bookID)) {
         bookID = Math.floor(Math.random() * 100000);
       } else {
-        this.abba(bookID + 1);
+        this.recursive(bookID + 1);
       }
       this.$emit("createdBook", {
         title: this.book.title,
