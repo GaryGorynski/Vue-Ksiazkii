@@ -53,13 +53,11 @@ export default {
   methods: {
     submitAuthor: function (event) {
       this.props.selectAuthor.push(event);
-      console.log(this.props.selectAuthor);
     },
     submitGenre: function (event) {
       this.props.selectGenre.push(event);
     },
     updateBooklist: function (event) {
-      console.log(this.props.booklist);
       this.props.booklist.push({
         ...event,
       });
