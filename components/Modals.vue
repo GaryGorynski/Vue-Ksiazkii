@@ -35,7 +35,4 @@ export default {
   display: flex;
   justify-content: space-evenly;
 }
-.mt-3 {
-  color: red;
-}
 </style>
