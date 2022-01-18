@@ -1,20 +1,29 @@
 <template>
   <div>
-    <div>
-      <b-tab title="Books" @click="fetch">
-        <ol>
-          <li
-            class="dupa"
-            v-b-modal.modal-1
-            v-for="book in paginatedBooklist[1]"
-            :key="book.id"
-          >
-            {{ book.title }}
-          </li>
-        </ol>
-
+    <div class="dups">
+      <b-tab class="dups" title="Books" @click="fetch">
+        <b-button
+          variant="link"
+          class="dupa"
+          v-b-modal.modal-1
+          v-for="(book, index) in currentPageItems"
+          :key="index"
+        >
+          {{ index }}. {{ book.title }}
+        </b-button>
+        <div class="test">
+          <b-button class="mt-20" variant="primary">{{
+            buttons.previous
+          }}</b-button>
+          <b-button @click="next" class="mt-20" variant="primary">{{
+            buttons.next
+          }}</b-button>
+          <b-button class="mt-20" variant="primary">{{
+            buttons.last
+          }}</b-button>
+        </div>
         <b-modal id="modal-1">
-          <template #modal-header> Tytuł książki </template>
+          <template modal-header> </template>
           <template #modal-footer>
             <a href="#" id="modalAudio">Pobierz Audiobook</a>
           </template>
@@ -35,6 +44,12 @@ export default {
       perPage: 10,
       paginatedBooklist: [],
       totalPages: 0,
+      buttons: {
+        first: "First",
+        previous: "Previous",
+        next: "Next",
+        last: "Last",
+      },
     };
   },
   methods: {
@@ -52,7 +67,17 @@ export default {
         const start = i * this.perPage;
         this.paginatedBooklist.push(data.slice(start, start + this.perPage));
       }
-      console.log(this.paginatedBooklist);
+      console.log(this.paginatedBooklist[0]);
+    },
+    next: function () {
+      console.log(this.currentPageItems);
+    },
+  },
+  computed: {
+    currentPageItems: {
+      get: function () {
+        return this.paginatedBooklist[0];
+      },
     },
   },
 };
@@ -60,8 +85,19 @@ export default {
 
 <style>
 .dupa {
-  margin-bottom: 10px;
-  width: 250px;
-  height: 30px;
+  height: 20px;
+}
+.dups {
+  flex-direction: column;
+  flex-wrap: wrap;
+  display: flex;
+  height: 350px;
+  align-items: flex-start;
+}
+
+.test {
+  align-self: flex-end;
+
+  margin-top: 20px;
 }
 </style>
