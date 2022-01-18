@@ -2,19 +2,19 @@
   <div class="forms">
     <AuthorForm
       :selectAuthor="props.selectAuthor"
-      v-on:submitedAuthor="submitAuthor($event)"
+      @submitedAuthor="submitAuthor($event)"
     />
 
     <GenreForm
       :selectGenre="props.selectGenre"
-      v-on:submitedGenre="submitGenre($event)"
+      @submitedGenre="submitGenre($event)"
     />
 
     <CreateBookForm
       v-bind="props"
-      v-on:createdBook="updateBooklist($event)"
-      v-on:updateSelectAuthor="updateSelectAuthor($event)"
-      v-on:updateSelectGenre="updateSelectGenre($event)"
+      @createdBook="updateBooklist($event)"
+      @updateSelectAuthor="updateSelectAuthor($event)"
+      @updateSelectGenre="updateSelectGenre($event)"
     />
     <Table v-on:deleteID="deleteBook($event)" :booklist="props.booklist" />
   </div>
@@ -25,6 +25,7 @@ import authorForm from "./authorForm.vue";
 import genreForm from "./genreForm.vue";
 import createBookForm from "./createBookForm.vue";
 import Table from "./Table.vue";
+
 export default {
   components: {
     AuthorForm: authorForm,
@@ -77,6 +78,10 @@ export default {
       );
 
       this.props.booklist = filteredBooklist;
+    },
+    fetchBooks: function (event) {
+      this.props.booklist.push(event);
+      console.log(this.props.booklist);
     },
   },
 };
