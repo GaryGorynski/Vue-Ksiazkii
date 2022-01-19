@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <b-tab class="books" title="Books">
+      <b-tab class="books" title="Books" @click="fetch">
         <b-button
           variant="link"
           class="books__btn"
@@ -25,7 +25,7 @@
             buttons.last
           }}</b-button>
         </div>
-        <b-modal id="modal-1" v-model="paginatedBooklist">
+        <b-modal id="modal-1">
           <template modal-header> </template>
           <template #modal-footer>
             <a href="#" id="modalAudio">Pobierz Audiobook</a>
@@ -55,15 +55,15 @@ export default {
       },
     };
   },
-  created() {
-    fetchBooks().then(
-      (response) =>
-        (this.fetchedData = this.createPaginated(
-          response.data
-        )) /*response.data*/
-    );
-  },
   methods: {
+    fetch: function () {
+      fetchBooks().then(
+        (response) =>
+          (this.fetchedData = this.createPaginated(
+            response.data
+          )) /*response.data*/
+      );
+    },
     createPaginated(data) {
       this.totalPages = Math.floor(data.length / this.perPage);
       for (var i = 0; i < this.totalPages; i++) {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <b-tab class="genres" title="Genres">
+      <b-tab class="genres" title="Genres" @click="fetch">
         <b-button
           variant="link"
           class="genres__btn"
@@ -54,14 +54,6 @@ export default {
         last: "Last",
       },
     };
-  },
-  created() {
-    fetchGenre().then(
-      (response) =>
-        (this.fetchedData = this.createPaginated(
-          response.data
-        )) /*response.data*/
-    );
   },
   methods: {
     fetch: function () {
