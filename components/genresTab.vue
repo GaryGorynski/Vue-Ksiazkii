@@ -3,27 +3,24 @@
     <div>
       <b-tab class="genres" title="Genres" @click="fetch">
         <div class="test">
-          <Table :fields="fields" :items="currentPageItems" />
-
-          <b-button @click="first" class="mt-20" variant="primary">{{
-            buttons.first
-          }}</b-button>
-          <b-button @click="previous" class="mt-20" variant="primary">{{
-            buttons.previous
-          }}</b-button>
-          <b-button @click="next" class="mt-20" variant="primary">{{
-            buttons.next
-          }}</b-button>
-          <b-button @click="last" class="mt-20" variant="primary">{{
-            buttons.last
-          }}</b-button>
+          <Table
+            :current-page="currentPage"
+            :per-page="perPage"
+            id="my-table"
+            :fields="fields"
+            :items="fetchedData"
+          />
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="rows"
+            :per-page="perPage"
+            aria-controls="my-table"
+            first-text="First"
+            prev-text="Prev"
+            next-text="Next"
+            last-text="Last"
+          ></b-pagination>
         </div>
-        <b-modal id="modal-3">
-          <template modal-header> </template>
-          <template #modal-footer>
-            <a href="#" id="modalAudio">Pobierz Audiobook</a>
-          </template>
-        </b-modal>
       </b-tab>
     </div>
   </div>
@@ -31,63 +28,30 @@
 
 <script>
 import { fetchGenre } from "../services/genreService";
-
+import Table from "./Table.vue";
 export default {
+  components: {
+    Table: Table,
+  },
   data() {
     return {
       fields: ["name"],
-
       fetchedData: [],
-      currentPage: 0,
+      currentPage: 1,
       perPage: 10,
-      paginatedGenrelist: [],
       totalPages: 0,
-      buttons: {
-        first: "First",
-        previous: "Previous",
-        next: "Next",
-        last: "Last",
-      },
     };
   },
   methods: {
     fetch: function () {
       fetchGenre().then(
-        (response) =>
-          (this.fetchedData = this.createPaginated(
-            response.data
-          )) /*response.data*/
+        (response) => (this.fetchedData = this.fetchedData = response.data)
       );
-    },
-    createPaginated(data) {
-      this.totalPages = Math.floor(data.length / this.perPage);
-      for (var i = 0; i < this.totalPages; i++) {
-        const start = i * this.perPage;
-        this.paginatedGenrelist.push(data.slice(start, start + this.perPage));
-      }
-      return this.totalPages;
-    },
-    first: function () {
-      this.currentPage = 0;
-    },
-    previous: function () {
-      this.currentPage = this.currentPage - 1;
-    },
-    next: function () {
-      this.currentPage = this.currentPage + 1;
-    },
-    last: function () {
-      this.currentPage = this.paginatedGenrelist.length - 1;
     },
   },
   computed: {
-    currentPageItems: {
-      get: function () {
-        return this.paginatedGenrelist[this.currentPage];
-      },
-      set: function () {
-        return this.paginatedGenrelist[this.currentPage];
-      },
+    rows() {
+      return this.fetchedData.length;
     },
   },
 };
@@ -104,10 +68,13 @@ export default {
   height: 100%;
   align-items: flex-start;
 }
-
-.test {
-  align-self: flex-start;
-
-  margin-top: 20px;
-}
 </style>
+
+<!--    createPaginated(data) {
+      this.totalPages = Math.floor(data.length / this.perPage);
+      for (var i = 0; i < this.totalPages; i++) {
+        const start = i * this.perPage;
+        this.paginatedGenrelist.push(data.slice(start, start + this.perPage));
+      }
+      return this.totalPages;
+    }, !-->

@@ -6,7 +6,6 @@
       type="search"
       placeholder="Type to Search"
     ></b-form-input>
-
     <b-table
       :filter="filter"
       :filter-included-fields="filterOn"
