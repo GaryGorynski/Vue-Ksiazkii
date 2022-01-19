@@ -6,6 +6,7 @@
       type="search"
       placeholder="Type to Search"
     ></b-form-input>
+
     <b-table
       :filter="filter"
       :filter-included-fields="filterOn"
@@ -13,6 +14,8 @@
       striped
       hover
       :items="items"
+      :perPage="perPage"
+      :currentPage="currentPage"
     >
       <template #cell(X)="{ item }">
         <b class="text-danger" @click="deleteRow(item)">X</b>
@@ -27,6 +30,8 @@ export default {
     booklist: { type: Array, required: false },
     fields: { type: Array, required: false },
     items: { type: Array, required: false },
+    perPage: { type: Number, required: false },
+    currentPage: { type: Number, required: false },
   },
   data() {
     return {

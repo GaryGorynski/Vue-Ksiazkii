@@ -2,20 +2,24 @@
   <div>
     <div>
       <b-tab class="books" title="Books">
-        <div class="test">
-          <Table :fields="fields" :items="currentPageItems" />
-          <b-button @click="first" class="mt-20" variant="primary">{{
-            buttons.first
-          }}</b-button>
-          <b-button @click="previous" class="mt-20" variant="primary">{{
-            buttons.previous
-          }}</b-button>
-          <b-button @click="next" class="mt-20" variant="primary">{{
-            buttons.next
-          }}</b-button>
-          <b-button @click="last" class="mt-20" variant="primary">{{
-            buttons.last
-          }}</b-button>
+        <div class="overflow-auto">
+          <Table
+            :current-page="currentPage"
+            :per-page="perPage"
+            id="my-table"
+            :fields="fields"
+            :items="fetchedData"
+          />
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="rows"
+            :per-page="perPage"
+            aria-controls="my-table"
+            first-text="First"
+            prev-text="Prev"
+            next-text="Next"
+            last-text="Last"
+          ></b-pagination>
         </div>
       </b-tab>
     </div>
@@ -34,7 +38,7 @@ export default {
       fields: ["title", "author", "kind", "genre"],
 
       fetchedData: [],
-      currentPage: 0,
+      currentPage: 1,
       perPage: 10,
       paginatedBooklist: [],
       totalPages: 0,
@@ -48,10 +52,9 @@ export default {
   },
   created() {
     fetchBooks().then(
-      (response) =>
-        (this.fetchedData = this.createPaginated(
+      (response) => (this.fetchedData = response.data) /*this.createPaginated(
           response.data
-        )) /*response.data*/
+        ))  */
     );
     console.log(this.paginatedBooklist);
   },
@@ -62,6 +65,7 @@ export default {
         const start = i * this.perPage;
         this.paginatedBooklist.push(data.slice(start, start + this.perPage));
       }
+
       return this.totalPages;
     },
     first: function () {
@@ -75,10 +79,13 @@ export default {
     },
     last: function () {
       this.currentPage = this.paginatedBooklist.length - 1;
-      console.log(this.currentPageItems);
+      console.log(this.fetchedData);
     },
   },
   computed: {
+    rows() {
+      return this.fetchedData.length;
+    },
     currentPageItems: {
       get: function () {
         return this.paginatedBooklist[this.currentPage];

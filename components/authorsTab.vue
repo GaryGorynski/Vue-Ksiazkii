@@ -3,20 +3,24 @@
     <div>
       <b-tab class="authors" title="Authors" @click="fetch">
         <div class="test">
-          <Table :fields="fields" :items="currentPageItems" />
+          <Table
+            :current-page="currentPage"
+            :per-page="perPage"
+            id="my-table"
+            :fields="fields"
+            :items="fetchedData"
+          />
 
-          <b-button @click="first" class="mt-20" variant="primary">{{
-            buttons.first
-          }}</b-button>
-          <b-button @click="previous" class="mt-20" variant="primary">{{
-            buttons.previous
-          }}</b-button>
-          <b-button @click="next" class="mt-20" variant="primary">{{
-            buttons.next
-          }}</b-button>
-          <b-button @click="last" class="mt-20" variant="primary">{{
-            buttons.last
-          }}</b-button>
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="rows"
+            :per-page="perPage"
+            aria-controls="my-table"
+            first-text="First"
+            prev-text="Prev"
+            next-text="Next"
+            last-text="Last"
+          ></b-pagination>
         </div>
         <b-modal id="modal-2">
           <template modal-header> </template>
@@ -52,10 +56,7 @@ export default {
   methods: {
     fetch: function () {
       fetchAuthors().then(
-        (response) =>
-          (this.fetchedData = this.createPaginated(
-            response.data
-          )) /*response.data*/
+        (response) => (this.fetchedData = response.data) /*response.data*/
       );
     },
     createPaginated(data) {
@@ -80,6 +81,9 @@ export default {
     },
   },
   computed: {
+    rows() {
+      return this.fetchedData.length;
+    },
     currentPageItems: {
       get: function () {
         return this.paginatedAuthorlist[this.currentPage];
