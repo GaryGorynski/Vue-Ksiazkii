@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <b-tab class="books" title="Books" @click="fetch">
+      <b-tab class="books" title="Books">
         <b-button
           variant="link"
           class="books__btn"
@@ -55,15 +55,15 @@ export default {
       },
     };
   },
+  created() {
+    fetchBooks().then(
+      (response) =>
+        (this.fetchedData = this.createPaginated(
+          response.data
+        )) /*response.data*/
+    );
+  },
   methods: {
-    fetch: function () {
-      fetchBooks().then(
-        (response) =>
-          (this.fetchedData = this.createPaginated(
-            response.data
-          )) /*response.data*/
-      );
-    },
     createPaginated(data) {
       this.totalPages = Math.floor(data.length / this.perPage);
       for (var i = 0; i < this.totalPages; i++) {
