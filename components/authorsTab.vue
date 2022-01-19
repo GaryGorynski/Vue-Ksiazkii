@@ -41,7 +41,7 @@ export default {
     return {
       fields: ["name"],
       fetchedData: [],
-      currentPage: 0,
+      currentPage: 1,
       perPage: 10,
       paginatedAuthorlist: [],
       totalPages: 0,
