@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="dups">
-      <b-tab class="dups" title="Books" @click="fetch">
+    <div>
+      <b-tab class="books" title="Books">
         <b-button
           variant="link"
-          class="dupa"
+          class="books__btn"
           v-b-modal.modal-1
           v-for="(book, index) in currentPageItems"
           :key="index"
@@ -12,17 +12,20 @@
           {{ index }}. {{ book.title }}
         </b-button>
         <div class="test">
-          <b-button class="mt-20" variant="primary">{{
+          <b-button @click="first" class="mt-20" variant="primary">{{
+            buttons.first
+          }}</b-button>
+          <b-button @click="previous" class="mt-20" variant="primary">{{
             buttons.previous
           }}</b-button>
           <b-button @click="next" class="mt-20" variant="primary">{{
             buttons.next
           }}</b-button>
-          <b-button class="mt-20" variant="primary">{{
+          <b-button @click="last" class="mt-20" variant="primary">{{
             buttons.last
           }}</b-button>
         </div>
-        <b-modal id="modal-1">
+        <b-modal id="modal-1" v-model="paginatedBooklist">
           <template modal-header> </template>
           <template #modal-footer>
             <a href="#" id="modalAudio">Pobierz Audiobook</a>
@@ -52,31 +55,43 @@ export default {
       },
     };
   },
+  created() {
+    fetchBooks().then(
+      (response) =>
+        (this.fetchedData = this.createPaginated(
+          response.data
+        )) /*response.data*/
+    );
+  },
   methods: {
-    fetch: function () {
-      fetchBooks().then(
-        (response) =>
-          (this.fetchedData = this.createPaginated(
-            response.data
-          )) /*response.data*/
-      );
-    },
     createPaginated(data) {
       this.totalPages = Math.floor(data.length / this.perPage);
       for (var i = 0; i < this.totalPages; i++) {
         const start = i * this.perPage;
         this.paginatedBooklist.push(data.slice(start, start + this.perPage));
       }
-      console.log(this.paginatedBooklist[0]);
+      return this.totalPages;
+    },
+    first: function () {
+      this.currentPage = 0;
+    },
+    previous: function () {
+      this.currentPage = this.currentPage - 1;
     },
     next: function () {
-      console.log(this.currentPageItems);
+      this.currentPage = this.currentPage + 1;
+    },
+    last: function () {
+      this.currentPage = this.paginatedBooklist.length - 1;
     },
   },
   computed: {
     currentPageItems: {
       get: function () {
-        return this.paginatedBooklist[0];
+        return this.paginatedBooklist[this.currentPage];
+      },
+      set: function () {
+        return this.paginatedBooklist[this.currentPage];
       },
     },
   },
@@ -84,10 +99,10 @@ export default {
 </script>
 
 <style>
-.dupa {
+.books__btn {
   height: 20px;
 }
-.dups {
+.books {
   flex-direction: column;
   flex-wrap: wrap;
   display: flex;
@@ -96,7 +111,7 @@ export default {
 }
 
 .test {
-  align-self: flex-end;
+  align-self: flex-start;
 
   margin-top: 20px;
 }

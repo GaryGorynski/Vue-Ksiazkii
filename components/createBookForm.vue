@@ -144,6 +144,7 @@ export default {
 
         this.submitStatus = "OK";
         this.releaseYearStatus = "OK";
+        console.log(this.booklist);
       }
     },
   },

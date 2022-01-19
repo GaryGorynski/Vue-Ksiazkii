@@ -79,10 +79,6 @@ export default {
 
       this.props.booklist = filteredBooklist;
     },
-    fetchBooks: function (event) {
-      this.props.booklist.push(event);
-      console.log(this.props.booklist);
-    },
   },
 };
 </script>
