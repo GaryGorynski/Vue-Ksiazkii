@@ -44,7 +44,6 @@ export default {
   },
   created() {
     fetchBooks().then((response) => (this.fetchedData = response.data));
-    console.log(this.paginatedBooklist);
   },
 
   computed: {
