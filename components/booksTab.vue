@@ -2,16 +2,16 @@
   <div>
     <div>
       <b-tab class="books" title="Books">
-        <b-button
-          variant="link"
-          class="books__btn"
-          v-b-modal.modal-1
-          v-for="(book, index) in currentPageItems"
-          :key="index"
-        >
-          {{ index }}. {{ book.title }}
-        </b-button>
         <div class="test">
+          <b-table
+            :filter="filter"
+            :filter-included-fields="filterOn"
+            :fields="fields"
+            :items="currentPageItems"
+          >
+          </b-table>
+
+          -
           <b-button @click="first" class="mt-20" variant="primary">{{
             buttons.first
           }}</b-button>
@@ -25,12 +25,6 @@
             buttons.last
           }}</b-button>
         </div>
-        <b-modal id="modal-1">
-          <template modal-header> </template>
-          <template #modal-footer>
-            <a href="#" id="modalAudio">Pobierz Audiobook</a>
-          </template>
-        </b-modal>
       </b-tab>
     </div>
   </div>
@@ -42,8 +36,11 @@ import { fetchBooks } from "../services/bookService";
 export default {
   data() {
     return {
+      fields: ["title", "author", "kind", "genre"],
+      filter: null,
+      filterOn: [],
       fetchedData: [],
-      currentPage: 0,
+      currentPage: 1,
       perPage: 10,
       paginatedBooklist: [],
       totalPages: 0,
@@ -62,6 +59,7 @@ export default {
           response.data
         )) /*response.data*/
     );
+    console.log(this.paginatedBooklist);
   },
   methods: {
     createPaginated(data) {
@@ -106,13 +104,14 @@ export default {
   flex-direction: column;
   flex-wrap: wrap;
   display: flex;
-  height: 350px;
+
+  height: 100%;
   align-items: flex-start;
 }
 
 .test {
-  align-self: flex-start;
-
+  flex-wrap: nowrap;
+  width: 1600px;
   margin-top: 20px;
 }
 </style>

@@ -2,16 +2,15 @@
   <div>
     <div>
       <b-tab class="genres" title="Genres" @click="fetch">
-        <b-button
-          variant="link"
-          class="genres__btn"
-          v-b-modal.modal-3
-          v-for="(genre, index) in currentPageItems"
-          :key="index"
-        >
-          {{ index }}. {{ genre.name }}
-        </b-button>
         <div class="test">
+          <b-table
+            :filter="filter"
+            :filter-included-fields="filterOn"
+            :fields="fields"
+            :items="currentPageItems"
+          >
+          </b-table>
+
           <b-button @click="first" class="mt-20" variant="primary">{{
             buttons.first
           }}</b-button>
@@ -42,6 +41,9 @@ import { fetchGenre } from "../services/genreService";
 export default {
   data() {
     return {
+      fields: ["name"],
+      filter: null,
+      filterOn: [],
       fetchedData: [],
       currentPage: 0,
       perPage: 10,
@@ -106,7 +108,7 @@ export default {
   flex-direction: column;
   flex-wrap: wrap;
   display: flex;
-  height: 350px;
+  height: 100%;
   align-items: flex-start;
 }
 
