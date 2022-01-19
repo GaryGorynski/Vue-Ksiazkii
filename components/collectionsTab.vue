@@ -29,8 +29,6 @@ export default {
   data() {
     return {
       fields: ["title"],
-      filter: null,
-      filterOn: [],
       fetchedData: [],
       currentPage: 0,
       perPage: 10,

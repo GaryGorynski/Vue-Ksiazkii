@@ -36,8 +36,6 @@ export default {
   data() {
     return {
       fields: ["name"],
-      filter: null,
-      filterOn: [],
       fetchedData: [],
       currentPage: 0,
       perPage: 10,

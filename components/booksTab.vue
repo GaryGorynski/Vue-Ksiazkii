@@ -32,8 +32,7 @@ export default {
   data() {
     return {
       fields: ["title", "author", "kind", "genre"],
-      filter: null,
-      filterOn: [],
+
       fetchedData: [],
       currentPage: 0,
       perPage: 10,
