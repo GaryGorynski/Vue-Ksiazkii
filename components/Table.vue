@@ -38,13 +38,7 @@ export default {
       filterOn: [],
     };
   },
-  computed: {
-    computedBooklist: {
-      get: function () {
-        return this.booklist;
-      },
-    },
-  },
+
   methods: {
     deleteRow: function (item) {
       const filtered = item.bookID;
@@ -55,3 +49,11 @@ export default {
 </script>
 
 <style></style>
+
+<!-- computed: {
+    computedBooklist: {
+      get: function () {
+        return this.booklist;
+      },
+    },
+  },  !-->

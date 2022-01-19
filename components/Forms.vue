@@ -78,6 +78,7 @@ export default {
       });
       this.props.selectedAuthor = null;
       this.props.selectedGenre = null;
+      console.log(this.props.booklist);
     },
 
     updateSelectAuthor: function (event) {
