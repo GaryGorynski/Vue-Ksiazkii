@@ -3,15 +3,7 @@
     <div>
       <b-tab class="books" title="Books">
         <div class="test">
-          <b-table
-            :filter="filter"
-            :filter-included-fields="filterOn"
-            :fields="fields"
-            :items="currentPageItems"
-          >
-          </b-table>
-
-          -
+          <Table :fields="fields" :items="currentPageItems" />
           <b-button @click="first" class="mt-20" variant="primary">{{
             buttons.first
           }}</b-button>
@@ -32,15 +24,18 @@
 
 <script>
 import { fetchBooks } from "../services/bookService";
-
+import Table from "./Table.vue";
 export default {
+  components: {
+    Table: Table,
+  },
   data() {
     return {
       fields: ["title", "author", "kind", "genre"],
       filter: null,
       filterOn: [],
       fetchedData: [],
-      currentPage: 1,
+      currentPage: 0,
       perPage: 10,
       paginatedBooklist: [],
       totalPages: 0,
@@ -81,6 +76,7 @@ export default {
     },
     last: function () {
       this.currentPage = this.paginatedBooklist.length - 1;
+      console.log(this.currentPageItems);
     },
   },
   computed: {

@@ -1,20 +1,19 @@
 <template>
   <div>
-    <Modals />
+    <Tabs />
     <Forms />
   </div>
 </template>
 
 <script>
 import Forms from "../components/Forms.vue";
-import Table from "../components/Table.vue";
-import Modals from "../components/Modals.vue";
+
+import Tabs from "../components/Tabs.vue";
 
 export default {
   components: {
     Forms,
-    Table,
-    Modals,
+    Tabs,
   },
 };
 </script>

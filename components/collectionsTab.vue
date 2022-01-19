@@ -3,13 +3,7 @@
     <div>
       <b-tab class="collections" title="Collections" @click="fetch">
         <div class="test">
-          <b-table
-            :filter="filter"
-            :filter-included-fields="filterOn"
-            :fields="fields"
-            :items="currentPageItems"
-          >
-          </b-table>
+          <Table :fields="fields" :items="currentPageItems" />
           <b-button @click="first" class="mt-20" variant="primary">{{
             buttons.first
           }}</b-button>
@@ -23,12 +17,6 @@
             buttons.last
           }}</b-button>
         </div>
-        <b-modal id="modal-4">
-          <template modal-header> </template>
-          <template #modal-footer>
-            <a href="#" id="modalAudio">Pobierz Audiobook</a>
-          </template>
-        </b-modal>
       </b-tab>
     </div>
   </div>

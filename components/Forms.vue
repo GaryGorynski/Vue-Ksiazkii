@@ -16,7 +16,11 @@
       @updateSelectAuthor="updateSelectAuthor($event)"
       @updateSelectGenre="updateSelectGenre($event)"
     />
-    <Table v-on:deleteID="deleteBook($event)" :booklist="props.booklist" />
+    <Table
+      v-on:deleteID="deleteBook($event)"
+      :fields="fields"
+      :items="props.booklist"
+    />
   </div>
 </template>
 <script>
@@ -42,6 +46,16 @@ export default {
         selectGenre: [{ value: null, text: "Genre" }],
         booklist: [],
       },
+      fields: [
+        "title",
+        "author",
+        "bookID",
+        "releaseYear",
+        "authorID",
+        "genre",
+        "genreID",
+        "X",
+      ],
     };
   },
   validations: {

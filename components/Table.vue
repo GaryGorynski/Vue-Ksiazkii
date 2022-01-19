@@ -12,7 +12,7 @@
       :fields="fields"
       striped
       hover
-      :items="booklist"
+      :items="items"
     >
       <template #cell(X)="{ item }">
         <b class="text-danger" @click="deleteRow(item)">X</b>
@@ -24,20 +24,12 @@
 <script>
 export default {
   props: {
-    booklist: { type: Array, required: true },
+    booklist: { type: Array, required: false },
+    fields: { type: Array, required: false },
+    items: { type: Array, required: false },
   },
   data() {
     return {
-      fields: [
-        "title",
-        "author",
-        "bookID",
-        "releaseYear",
-        "authorID",
-        "genre",
-        "genreID",
-        "X",
-      ],
       filter: null,
       filterOn: [],
     };
