@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="modals">
     <b-tabs pills card content-class="mt-3 ml-5">
       <BooksTab />
       <AuthorsTab />

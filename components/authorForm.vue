@@ -91,5 +91,5 @@ p {
 }
 .dupa {
   width: 1500px;
+
 }
-</style>

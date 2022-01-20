@@ -29,7 +29,7 @@
 import { required } from "vuelidate/lib/validators";
 export default {
   props: {
-    selectGenre: { type: Array, required: true },
+    selectGenre: { type: Array, required: false },
   },
   data() {
     return {
