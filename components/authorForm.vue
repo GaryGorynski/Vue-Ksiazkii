@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="dupa">
     <b-row class="my-5">
-      <b-col sm="6">
+      <b-col md="12">
         <b-form-input
           type="text"
           placeholder="Author first name"
@@ -88,5 +88,8 @@ export default {
 p {
   font-size: 12px;
   margin-bottom: 3px;
+}
+.dupa {
+  width: 1500px;
 }
 </style>

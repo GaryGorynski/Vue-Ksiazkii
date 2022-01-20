@@ -1,7 +1,7 @@
 <template>
   <div id="book-creator">
     <b-row class="my-5">
-      <b-col sm="6">
+      <b-col sm="12">
         <b-form-input
           v-model="$v.book.title.$model"
           placeholder="Book title"

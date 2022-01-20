@@ -68,6 +68,7 @@ export default {
   display: flex;
   height: 100%;
   align-items: flex-start;
+  width: 100%;
 }
 </style>
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-row class="my-5">
-      <b-col sm="6">
+      <b-col sm="12">
         <b-form-input
           v-model="$v.genre.value.$model"
           placeholder="Genre"

@@ -15,6 +15,7 @@
       :items="items"
       :perPage="perPage"
       :currentPage="currentPage"
+      defaultValue="Dupa"
     >
       <template #cell(X)="{ item }">
         <b class="text-danger" @click="deleteRow(item)">X</b>
@@ -41,7 +42,7 @@ export default {
 
   methods: {
     deleteRow: function (item) {
-      const filtered = item.bookID;
+      const filtered = item.title;
       this.$emit("deleteID", filtered);
     },
   },
