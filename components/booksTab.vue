@@ -9,6 +9,7 @@
           :fields="fields"
           :items="computedBooklist"
           v-on:deleteID="deleteBook($event)"
+          aria-setsize="15"
         />
         <b-pagination
           v-model="currentPage"
@@ -21,7 +22,7 @@
           last-text="Last"
         ></b-pagination>
       </div>
-      <div id="book-creator">
+      <div class="book-creator" id="book-creator">
         <b-row class="my-5">
           <b-col sm="12">
             <b-form-input
@@ -108,16 +109,17 @@ export default {
       fields: [
         { key: "title", sortable: true },
         { key: "author", sortable: true },
-        { key: "bookID", sortable: true },
-        { key: "releaseYear", sortable: true },
-        { key: "AuthorID", sortable: true },
         { key: "genre", sortable: true },
+        { key: "releaseYear", sortable: true },
+        { key: "bookID", sortable: true },
+        { key: "AuthorID", sortable: true },
         { key: "genreID", sortable: true },
         { key: "X", sortable: false },
       ],
       currentPage: 1,
       perPage: 10,
       totalPages: 0,
+      filteredBooklist: [],
     };
   },
 
@@ -130,7 +132,7 @@ export default {
         return this.booklist;
       },
       set: function () {
-        return this.$emit("deleteBook");
+        return this.$emit("deleteBook", this.filteredBooklist);
       },
     },
     computedAuthor: {
@@ -200,11 +202,10 @@ export default {
       }
     },
     deleteBook: function (event) {
-      let filteredBooklist = this.computedBooklist.filter(
+      this.filteredBooklist = this.computedBooklist.filter(
         (book) => book.title !== event
       );
-
-      this.computedBooklist = filteredBooklist;
+      this.computedBooklist = this.filteredBooklist;
     },
   },
   validations: {
@@ -230,6 +231,10 @@ export default {
   align-items: flex-start;
 }
 .bookTab {
+  width: 100%;
+}
+
+.book-creator {
   width: 100%;
 }
 </style>

@@ -7,6 +7,7 @@
         @updateSelectAuthor="updateSelectAuthor($event)"
         @updateSelectGenre="updateSelectGenre($event)"
         @computedBooklist="computedBooklist($event)"
+        @deleteBook="deleteBook($event)"
       />
       <AuthorsTab
         v-bind:selectAuthor="props.selectAuthor"
@@ -35,7 +36,9 @@ export default {
     CollectionsTab: collectionsTab,
   },
   created() {
-    fetchBooks().then((response) => (this.props.booklist = response.data));
+    fetchBooks()
+      .then((response) => (this.props.booklist = response.data))
+      .catch((error) => console.log(error));
   },
   data() {
     return {
@@ -59,7 +62,7 @@ export default {
       this.props.booklist.push({
         ...event,
       });
-      console.log(this.props.booklist);
+
       this.props.selectedAuthor = null;
       this.props.selectedGenre = null;
     },
@@ -68,6 +71,9 @@ export default {
     },
     updateSelectGenre: function (event) {
       this.props.selectedGenre = event;
+    },
+    deleteBook: function (event) {
+      this.props.booklist = event;
     },
   },
 };

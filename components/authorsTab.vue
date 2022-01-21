@@ -21,7 +21,7 @@
             last-text="Last"
           ></b-pagination>
         </div>
-        <div class="dupa">
+        <div class="author-creator">
           <b-row class="my-5">
             <b-col md="12">
               <b-form-input
@@ -93,10 +93,11 @@ export default {
   },
   methods: {
     fetch: function () {
-      fetchAuthors().then(
-        (response) => (this.fetchedData = response.data) /*response.data*/
-      );
-      console.log(this.fetchedData);
+      fetchAuthors()
+        .then(
+          (response) => (this.fetchedData = response.data) /*response.data*/
+        )
+        .catch((error) => console.log(error));
     },
     submitedAuthor: function () {
       this.$v.author.$touch();
@@ -143,6 +144,9 @@ export default {
   display: flex;
   height: 100%;
   align-items: flex-start;
+}
+.author-creator {
+  width: 100%;
 }
 </style>
 

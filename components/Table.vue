@@ -7,6 +7,7 @@
       placeholder="Type to Search"
     ></b-form-input>
     <b-table
+      sticky-header
       :filter="filter"
       :filter-included-fields="filterOn"
       :fields="fields"
@@ -15,10 +16,24 @@
       :items="items"
       :perPage="perPage"
       :currentPage="currentPage"
-      defaultValue="Dupa"
     >
+      <template #empty="scope">
+        <h4>{{ scope.emptyText }}</h4>
+      </template>
       <template #cell(X)="{ item }">
         <b class="text-danger" @click="deleteRow(item)">X</b>
+      </template>
+      <template #cell(releaseYear)>
+        <b>--</b>
+      </template>
+      <template #cell(bookID)>
+        <b>--</b>
+      </template>
+      <template #cell(AuthorID)>
+        <b>--</b>
+      </template>
+      <template #cell(genreID)>
+        <b>--</b>
       </template>
     </b-table>
   </div>
@@ -49,7 +64,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.b-table {
+  table-layout: fixed;
+  word-wrap: break-word;
+  align-self: baseline;
+  text-align: center;
+}
+</style>
 
 <!-- computed: {
     computedBooklist: {

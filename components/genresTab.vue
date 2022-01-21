@@ -2,7 +2,7 @@
   <div>
     <div>
       <b-tab class="genres" title="Genres" @click="fetch">
-        <div class="test">
+        <div>
           <Table
             :current-page="currentPage"
             :per-page="perPage"
@@ -21,7 +21,7 @@
             last-text="Last"
           ></b-pagination>
         </div>
-        <div>
+        <div class="genre-creator">
           <b-row class="my-5">
             <b-col sm="12">
               <b-form-input
@@ -76,9 +76,11 @@ export default {
   },
   methods: {
     fetch: function () {
-      fetchGenre().then(
-        (response) => (this.fetchedData = this.fetchedData = response.data)
-      );
+      fetchGenre()
+        .then(
+          (response) => (this.fetchedData = this.fetchedData = response.data)
+        )
+        .catch((error) => console.log(error));
     },
     submitedGenre: function () {
       this.$v.genre.$touch();
@@ -117,6 +119,9 @@ export default {
   display: flex;
   height: 100%;
   align-items: flex-start;
+}
+.genre-creator {
+  width: 100%;
 }
 </style>
 

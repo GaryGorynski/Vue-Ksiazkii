@@ -45,7 +45,9 @@ export default {
   },
   methods: {
     fetch: function () {
-      fetchCollection().then((response) => (this.fetchedData = response.data));
+      fetchCollection()
+        .then((response) => (this.fetchedData = response.data))
+        .catch((error) => console.log(error));
     },
   },
   computed: {
