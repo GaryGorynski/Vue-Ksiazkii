@@ -7,7 +7,7 @@
           :per-page="perPage"
           id="my-table"
           :fields="fields"
-          :items="fetchedData"
+          :items="booklist"
           v-on:deleteID="deleteBook($event)"
         />
         <b-pagination
@@ -85,7 +85,6 @@
 
 <script>
 import { required, numeric } from "vuelidate/lib/validators";
-import { fetchBooks } from "../services/bookService";
 import Table from "./Table.vue";
 export default {
   props: {
@@ -116,19 +115,23 @@ export default {
         { key: "genreID", sortable: true },
         { key: "X", sortable: false },
       ],
-      fetchedData: [],
       currentPage: 1,
       perPage: 10,
       totalPages: 0,
     };
   },
-  created() {
-    fetchBooks().then((response) => (this.fetchedData = response.data));
-  },
 
   computed: {
     rows() {
-      return this.fetchedData.length;
+      return this.booklist.length;
+    },
+    computedBooklist: {
+      get: function () {
+        this.booklist;
+      },
+      set: function () {
+        this.$emit("delete");
+      },
     },
     computedAuthor: {
       get: function () {
@@ -194,15 +197,14 @@ export default {
 
         this.submitStatus = "OK";
         this.releaseYearStatus = "OK";
-        console.log(this.booklist);
       }
     },
     deleteBook: function (event) {
-      let filteredBooklist = this.fetchedData.filter(
+      let filteredBooklist = this.booklist.filter(
         (book) => book.title !== event
       );
 
-      this.fetchedData = filteredBooklist;
+      this.booklist = filteredBooklist;
     },
   },
   validations: {
