@@ -7,7 +7,7 @@
           :per-page="perPage"
           id="my-table"
           :fields="fields"
-          :items="booklist"
+          :items="computedBooklist"
           v-on:deleteID="deleteBook($event)"
         />
         <b-pagination
@@ -123,14 +123,14 @@ export default {
 
   computed: {
     rows() {
-      return this.booklist.length;
+      return this.computedBooklist.length;
     },
     computedBooklist: {
       get: function () {
-        this.booklist;
+        return this.booklist;
       },
       set: function () {
-        this.$emit("delete");
+        return this.$emit("deleteBook");
       },
     },
     computedAuthor: {
@@ -200,11 +200,11 @@ export default {
       }
     },
     deleteBook: function (event) {
-      let filteredBooklist = this.booklist.filter(
+      let filteredBooklist = this.computedBooklist.filter(
         (book) => book.title !== event
       );
 
-      this.booklist = filteredBooklist;
+      this.computedBooklist = filteredBooklist;
     },
   },
   validations: {
